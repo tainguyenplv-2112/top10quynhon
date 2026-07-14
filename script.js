@@ -80,44 +80,187 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // ---- Search input ----
+  // ---- Live Search Engine & Dropdown ----
   const searchInput = document.getElementById('search-input');
   const searchBtn = document.getElementById('search-btn');
-  if (searchBtn && searchInput) {
-    searchBtn.addEventListener('click', function () {
-      const q = searchInput.value.trim();
-      if (q) {
-        alert('Tìm kiếm: "' + q + '"');
+  const headerSearch = document.getElementById('header-search');
+
+  // Khai báo cơ sở dữ liệu bài viết tĩnh cho công cụ tìm kiếm
+  const articlesDatabase = [
+    { title: "Top 8 Khách Sạn Gần Biển Quy Nhơn Đẹp Nhất 2025", url: "khach-san-quy-nhon.html", category: "khachsan", desc: "View biển, giá hợp lý, resort sang trọng 5 sao, khách sạn trung tâm..." },
+    { title: "Top 10 Bãi Biển Đẹp Nhất Quy Nhơn 2025 – Thiên Đường Biển Việt Nam", url: "bai-bien-quy-nhon.html", category: "dulich", desc: "Kỳ Co, Eo Gió, Bãi Hoàng Hậu, Hòn Khô ngắm san hô..." },
+    { title: "Đặc Sản Quy Nhơn – 15 Món Ăn Nhất Định Phải Thử Xứ Nẫu", url: "dac-san-quy-nhon.html", category: "amthuc", desc: "Bánh hỏi cháo lòng, bánh xèo tôm nhảy, tré rơm, nem chợ Huyện..." },
+    { title: "Eo Gió Quy Nhơn – Cẩm Nang Du Lịch Check-in Tự Túc A-Z", url: "eo-gio.html", category: "dulich", desc: "Review đường đi Nhơn Lý, giá vé cổng, hoàng hôn bình minh cực đẹp..." },
+    { title: "Ghềnh Ráng Tiên Sa – Điểm Đến Thơ Mộng Lãng Mạn Nhất", url: "ghenh-rang.html", category: "dulich", desc: "Viếng mộ nhà thơ Hàn Mặc Tử, check-in Bãi Trứng tròn mịn độc lạ..." },
+    { title: "Tháp Đôi Quy Nhơn – Di Tích Lịch Sử Chăm Pa Cổ Đại Huyền Bí", url: "thap-doi.html", category: "dulich", desc: "Kiến trúc tháp Chăm cổ kính độc đáo ngay trung tâm thành phố..." },
+    { title: "Review Top Các Quán Ăn Ngon Nổi Tiếng Nhất Quy Nhơn 2025", url: "quan-an-quy-nhon.html", category: "amthuc", desc: "Hải sản Cine, bánh xèo Gia Vỹ, bún cá Ngọc Liên ngon rẻ..." },
+    { title: "Dịch Vụ Thuê Xe Ô Tô Quy Nhơn – Bảng Giá Tự Lái & Có Tài 2025", url: "thue-xe-quy-nhon.html", category: "dichvu", desc: "Thuê xe du lịch 4 chỗ, 7 chỗ, 16 chỗ đời mới giá rẻ..." },
+    { title: "Tour Du Lịch Quy Nhơn Trọn Gói 2025 – Review 5 Tour Tốt Nhất", url: "tour-quy-nhon.html", category: "dulich", desc: "Đặt tour Kỳ Co Eo Gió, Phú Yên, Tây Sơn chèo đò Hầm Hô..." },
+    { title: "Thợ Sửa Điện Nước Quy Nhơn – 5 Dịch Vụ Uy Tín Phản Hồi Trong 1 Giờ", url: "sua-dien-nuoc-quy-nhon.html", category: "dichvu", desc: "Thợ sửa chập điện gia đình, rò rỉ ống nước bồn cầu lavabo 24/7..." },
+    { title: "Trang Trí Gia Tiên Quy Nhơn – 8 Đơn Vị Cưới Hỏi Chuyên Nghiệp", url: "trang-tri-gia-tien.html", category: "dichvu", desc: "Trang trí tiệc cưới, gia tiên, cổng hoa, rạp cưới trọn gói..." },
+    { title: "Kinh Nghiệm Mua Sắm Tại Quy Nhơn – Địa Điểm Mua Quà Đặc Sản", url: "mua-sam-quy-nhon.html", category: "dichvu", desc: "Chợ Lớn Quy Nhơn, chợ đêm Xuân Diệu, siêu thị đặc sản..." },
+    { title: "Review Nhà Hàng Hải Sản Cine Quy Nhơn – Sang Trọng, View Biển", url: "hai-san-cine-quy-nhon.html", category: "amthuc", desc: "Cá ngừ đại dương nướng, tôm hùm hấp dừa ngon ngọt..." },
+    { title: "Quà Tặng Đặc Sản Quy Nhơn Bình Định – Top 10 Địa Chỉ Uy Tín", url: "qua-tang-quy-nhon.html", category: "dichvu", desc: "Mua bánh ít lá gai, nem chả tré, rượu bàu đá làm quà biếu..." }
+  ];
+
+  // Tạo khung kết quả hiển thị dropdown
+  let searchDropdown = document.createElement('div');
+  searchDropdown.style.position = 'absolute';
+  searchDropdown.style.top = '100%';
+  searchDropdown.style.left = '0';
+  searchDropdown.style.right = '0';
+  searchDropdown.style.background = 'white';
+  searchDropdown.style.boxShadow = '0 8px 30px rgba(0,0,0,0.15)';
+  searchDropdown.style.borderRadius = '8px';
+  searchDropdown.style.marginTop = '8px';
+  searchDropdown.style.maxHeight = '300px';
+  searchDropdown.style.overflowY = 'auto';
+  searchDropdown.style.zIndex = '9999';
+  searchDropdown.style.display = 'none';
+  searchDropdown.style.border = '1px solid #eaeaea';
+  
+  if (headerSearch) {
+    headerSearch.style.position = 'relative';
+    headerSearch.appendChild(searchDropdown);
+  }
+
+  function performSearch(query) {
+    query = query.toLowerCase().trim();
+    if (!query) {
+      searchDropdown.style.display = 'none';
+      return;
+    }
+
+    const matches = articlesDatabase.filter(art => 
+      art.title.toLowerCase().includes(query) || 
+      art.desc.toLowerCase().includes(query)
+    );
+
+    if (matches.length > 0) {
+      searchDropdown.innerHTML = matches.map(art => `
+        <div style="padding: 10px 14px; border-bottom: 1px solid #f5f5f5; transition: background 0.2s; cursor: pointer;" 
+             onclick="window.location.href='${art.url}'"
+             onmouseover="this.style.background='#f9f9f9'"
+             onmouseout="this.style.background='transparent'">
+          <div style="font-weight: 700; font-size: 13px; color: #333;">${art.title}</div>
+          <div style="font-size: 11px; color: #777; margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${art.desc}</div>
+        </div>
+      `).join('');
+      searchDropdown.style.display = 'block';
+    } else {
+      searchDropdown.innerHTML = `<div style="padding: 14px; text-align: center; font-size: 13px; color: #999;">Không tìm thấy bài viết phù hợp</div>`;
+      searchDropdown.style.display = 'block';
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      performSearch(searchInput.value);
+    });
+
+    searchInput.addEventListener('focus', function() {
+      if (searchInput.value.trim()) {
+        performSearch(searchInput.value);
       }
     });
-    searchInput.addEventListener('keydown', function (e) {
+
+    // Nhấp ra ngoài đóng dropdown tìm kiếm
+    document.addEventListener('click', function(e) {
+      if (headerSearch && !headerSearch.contains(e.target)) {
+        searchDropdown.style.display = 'none';
+      }
+    });
+  }
+
+  if (searchBtn && searchInput) {
+    searchBtn.addEventListener('click', function() {
+      const q = searchInput.value.trim();
+      if (q) {
+        // Nếu không ở trang chủ, chuyển hướng về trang chủ kèm tham số tìm kiếm
+        if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/' && !window.location.pathname.endsWith('top10quynhon/')) {
+          window.location.href = 'index.html?search=' + encodeURIComponent(q);
+        } else {
+          // Lọc các thẻ trên trang chủ theo kết quả tìm kiếm
+          filterBySearchKeyword(q);
+        }
+      }
+    });
+
+    searchInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         searchBtn.click();
       }
     });
   }
 
-  // ---- Lazy load animation on scroll ----
-  const animateOnScroll = function () {
-    const elements = document.querySelectorAll('.cat-card, .article-row, .popular-card');
-    elements.forEach(el => {
-      const rect = el.getBoundingClientRect();
-      if (rect.top < window.innerHeight - 60) {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
+  // Tự động kiểm tra tham số tìm kiếm từ URL (?search=...) khi tải trang chủ
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchParam = urlParams.get('search');
+  if (searchParam && (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname.endsWith('top10quynhon/'))) {
+    if (searchInput) {
+      searchInput.value = searchParam;
+      setTimeout(() => { filterBySearchKeyword(searchParam); }, 200);
+    }
+  }
+
+  function filterBySearchKeyword(keyword) {
+    keyword = keyword.toLowerCase().trim();
+    const cards = document.querySelectorAll('.featured-grid .card, .article-row, .cat-card');
+    let foundAny = false;
+    
+    cards.forEach(card => {
+      const text = card.textContent.toLowerCase();
+      if (text.includes(keyword)) {
+        card.style.display = '';
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+        foundAny = true;
+      } else {
+        card.style.display = 'none';
       }
     });
-  };
+    searchDropdown.style.display = 'none';
+  }
 
-  // Initial state for animated elements
-  document.querySelectorAll('.cat-card, .article-row, .popular-card').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
-  });
+  // ---- Category Tabs Filter (index.html) ----
+  const tabButtons = document.querySelectorAll('.tab-btn');
+  if (tabButtons.length > 0) {
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', function() {
+        // Đổi active class
+        tabButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
 
-  window.addEventListener('scroll', animateOnScroll);
-  animateOnScroll(); // Run on load
+        const filterValue = btn.getAttribute('data-filter');
+        const cards = document.querySelectorAll('.featured-grid .card, .article-row, .cat-card');
+
+        cards.forEach(card => {
+          // Xác định danh mục của thẻ dựa trên id hoặc class
+          let cardCat = 'other';
+          
+          if (card.id.includes('hotel') || card.id.includes('khachsan') || card.innerHTML.includes('khach-san')) {
+            cardCat = 'khachsan';
+          } else if (card.id.includes('repair') || card.id.includes('dichvu') || card.id.includes('gift') || card.id.includes('sam') || card.id.includes('tri') || card.innerHTML.includes('sua-dien-nuoc') || card.innerHTML.includes('trang-tri') || card.innerHTML.includes('mua-sam') || card.innerHTML.includes('qua-tang')) {
+            cardCat = 'dichvu';
+          } else if (card.id.includes('seafood') || card.id.includes('food') || card.id.includes('quan-an') || card.innerHTML.includes('dac-san') || card.innerHTML.includes('quan-an') || card.innerHTML.includes('hai-san')) {
+            cardCat = 'amthuc';
+          } else if (card.id.includes('dulich') || card.id.includes('gio') || card.id.includes('rang') || card.id.includes('doi') || card.innerHTML.includes('eo-gio') || card.innerHTML.includes('ghenh-rang') || card.innerHTML.includes('thap-doi') || card.innerHTML.includes('bai-bien') || card.innerHTML.includes('tour')) {
+            cardCat = 'dulich';
+          }
+
+          if (filterValue === 'all' || cardCat === filterValue) {
+            card.style.display = '';
+            setTimeout(() => {
+              card.style.opacity = '1';
+              card.style.transform = 'translateY(0) scale(1)';
+            }, 50);
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
 
   // ---- Topbar marquee effect ----
   const topbarText = document.querySelector('.topbar-text');
