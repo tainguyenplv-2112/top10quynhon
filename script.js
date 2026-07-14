@@ -126,11 +126,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ---- Card click ripple ----
-  document.querySelectorAll('.card-link').forEach(link => {
-    link.addEventListener('click', function (e) {
-      e.preventDefault(); // Just demo, no real navigation
-    });
-  });
+  // Removed e.preventDefault() to allow real page navigation on card banners
 
   console.log('Top 10 Quy Nhơn website loaded successfully ✅');
 });
