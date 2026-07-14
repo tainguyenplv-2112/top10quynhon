@@ -388,6 +388,8 @@ ul { list-style: none; }
 /* Bottom row (2 small cards) span full grid */
 .card-small:nth-child(4) { grid-column: 1; grid-row: 3; }
 .card-small:nth-child(5) { grid-column: 2; grid-row: 3; }
+.card-small:nth-child(6) { grid-column: 1; grid-row: 4; }
+.card-small:nth-child(7) { grid-column: 2; grid-row: 4; }
 
 /* =============================================
    TWO COLUMN LAYOUT
