@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Bài Viết Mới – Hệ Thống Quản Trị Cẩm Nang Quy Nhơn</title>
+  <meta name="description" content="Hệ thống đăng bài viết, cẩm nang tin tức mới cho website TOP 10 Quy Nhơn.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="detail.css?v=3">
+  <style>
+    .form-container {
+      background: white;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      font-size: 13px;
+      color: #334155;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 4px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #334155;
+      box-sizing: border-box;
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: #e67e22;
+      box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.1);
+    }
+    .btn-submit {
+      background: #e67e22;
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      font-size: 14px;
+      font-weight: 700;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .btn-submit:hover {
+      background: #d35400;
+    }
+    .form-desc {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== TOP BAR ===== -->
+  <div class="topbar">
+    <div class="container topbar-inner">
+      <span class="topbar-text">&#128205; Thông tin du lịch Quy Nhơn – Gia Lai cập nhật 2026</span>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header" id="site-header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" id="logo-link">
+        <div class="logo-badge">
+          <span class="logo-top">10</span>
+          <span class="logo-bottom">Quynhon</span>
+          <span class="logo-dot">.com</span>
+        </div>
+      </a>
+      <a href="index.html" class="back-btn" style="margin: 0; padding: 8px 16px;">
+        Quay lại trang chủ
+      </a>
+    </div>
+  </header>
+
+  <!-- ===== FORM CONTENT ===== -->
+  <main class="container" style="max-width: 800px; margin-top: 30px;">
+    <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 10px; text-transform: uppercase;">✍️ Đăng Bài Viết Cẩm Nang Mới</h2>
+    <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Bạn có thể dễ dàng viết bài, chia sẻ kinh nghiệm du lịch, đánh giá dịch vụ hoặc các lưu ý tại Quy Nhơn để chia sẻ đến khách du lịch.</p>
+
+    <div class="form-container">
+      <form id="postForm">
+        
+        <!-- Tiêu đề -->
+        <div class="form-group">
+          <label for="postTitle">Tiêu đề bài viết *</label>
+          <input type="text" id="postTitle" class="form-control" placeholder="Ví dụ: Top 5 quán bánh xèo tôm nhảy ngon nhất Quy Nhơn" required />
+        </div>
+
+        <!-- Chuyên mục -->
+        <div class="form-group">
+          <label for="postCategory">Chuyên mục bài viết *</label>
+          <select id="postCategory" class="form-control" required>
+            <option value="dulich">🏖️ Du lịch Quy Nhơn</option>
+            <option value="amthuc">🍲 Ẩm thực Quy Nhơn</option>
+            <option value="khachsan">🏨 Lưu trú & Homestay</option>
+            <option value="dichvu">🚗 Dịch vụ đời sống</option>
+          </select>
+        </div>
+
+        <!-- Ảnh đại diện -->
+        <div class="form-group">
+          <label for="postImage">Ảnh đại diện bài viết (Link URL ảnh hoặc chọn mẫu) *</label>
+          <select id="postImageSelect" class="form-control" style="margin-bottom: 8px;">
+            <option value="images/seafood_restaurant.png">Mẫu ảnh Ẩm thực (Hải sản)</option>
+            <option value="images/beach_hotel.png">Mẫu ảnh Du lịch (Bờ biển)</option>
+            <option value="images/homestay.png">Mẫu ảnh Homestay</option>
+            <option value="images/repair_service.png">Mẫu ảnh Dịch vụ sửa chữa</option>
+            <option value="images/car_rental.png">Mẫu ảnh Thuê xe ô tô</option>
+            <option value="images/thue_xe_may.png">Mẫu ảnh Thuê xe máy</option>
+            <option value="custom">Dán link ảnh tùy chọn của riêng bạn</option>
+          </select>
+          <input type="url" id="postImageUrl" class="form-control" style="display:none;" placeholder="Dán link ảnh của bạn ở đây (http://...)" value="images/seafood_restaurant.png" />
+          <p class="form-desc">Chọn hình ảnh mẫu có sẵn hoặc chọn dán link ảnh từ nguồn khác.</p>
+        </div>
+
+        <!-- Mô tả ngắn -->
+        <div class="form-group">
+          <label for="postDesc">Mô tả ngắn bài viết *</label>
+          <input type="text" id="postDesc" class="form-control" placeholder="Tóm tắt ngắn gọn nội dung bài viết trong 2-3 câu..." required />
+        </div>
+
+        <!-- Nội dung bài viết -->
+        <div class="form-group">
+          <label for="postContent">Nội dung chi tiết bài viết (Hỗ trợ xuống dòng) *</label>
+          <textarea id="postContent" class="form-control" rows="12" placeholder="Nhập nội dung bài viết của bạn tại đây..." required></textarea>
+        </div>
+
+        <!-- Tên người viết -->
+        <div class="form-group">
+          <label for="postAuthor">Họ tên người viết bài *</label>
+          <input type="text" id="postAuthor" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required />
+        </div>
+
+        <button type="submit" class="btn-submit">🚀 ĐĂNG BÀI VIẾT NGAY</button>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // Xử lý ẩn hiện input link ảnh tùy chọn
+    const select = document.getElementById('postImageSelect');
+    const input = document.getElementById('postImageUrl');
+
+    select.addEventListener('change', function() {
+      if (select.value === 'custom') {
+        input.style.display = 'block';
+        input.value = '';
+      } else {
+        input.style.display = 'none';
+        input.value = select.value;
+      }
+    });
+
+    // Xử lý gửi form
+    document.getElementById('postForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('postTitle').value;
+      const category = document.getElementById('postCategory').value;
+      const imageUrl = input.value || select.value;
+      const desc = document.getElementById('postDesc').value;
+      const content = document.getElementById('postContent').value;
+      const author = document.getElementById('postAuthor').value;
+      
+      const newPost = {
+        id: Date.now().toString(),
+        title: title,
+        category: category,
+        imageUrl: imageUrl,
+        desc: desc,
+        content: content,
+        author: author,
+        date: new Date().toLocaleDateString('vi-VN')
+      };
+
+      // Đọc các bài viết cũ từ localStorage
+      let customPosts = JSON.parse(localStorage.getItem('custom_posts')) || [];
+      customPosts.unshift(newPost); // Thêm bài viết mới vào đầu danh sách
+
+      // Lưu lại vào localStorage
+      localStorage.setItem('custom_posts', JSON.stringify(customPosts));
+
+      alert('Đăng bài viết mới thành công! Bạn sẽ được chuyển hướng về trang chủ để xem bài viết.');
+      window.location.href = 'index.html';
+    });
+  </script>
+</body>
+</html>
