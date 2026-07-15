@@ -1502,6 +1502,123 @@ ul { list-style: none; }
   line-height: 1.4;
 }
 
+/* =============================================
+   FILTER TABS & ARTICLES GRID
+   ============================================= */
+.filter-container {
+  background: white;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  margin-bottom: 28px;
+}
+.filter-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: #2c3e50;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.tab-btn {
+  padding: 8px 16px;
+  background: #f1f5f9;
+  border: none;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.tab-btn:hover {
+  background: #cbd5e1;
+}
+.tab-btn.active {
+  background: #e67e22;
+  color: white;
+}
+.filter-articles-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+.filter-card {
+  background: #f8fafc;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+.filter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+.filter-card-img {
+  height: 110px;
+  overflow: hidden;
+}
+.filter-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.filter-card-body {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.filter-card-cat {
+  font-size: 8.5px;
+  font-weight: 800;
+  color: white;
+  background: #3498db;
+  padding: 2px 6px;
+  border-radius: 2px;
+  align-self: flex-start;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.filter-card-cat.cat-dulich { background: #27ae60; }
+.filter-card-cat.cat-amthuc { background: #e67e22; }
+.filter-card-cat.cat-khachsan { background: #e74c3c; }
+.filter-card-cat.cat-dichvu { background: #9b59b6; }
+
+.filter-card-body h4 {
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.filter-card-body span {
+  font-size: 10px;
+  color: #999;
+  margin-top: auto;
+}
+
+@media (max-width: 960px) {
+  .filter-articles-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .filter-articles-grid { grid-template-columns: 1fr; }
+}
+
+
 
 
 
