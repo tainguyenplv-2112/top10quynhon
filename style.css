@@ -959,3 +959,369 @@ ul { list-style: none; }
   .comment-text { padding-left: 0; margin-top: 8px; }
 }
 
+/* =============================================
+   MINIMALIST HOME LAYOUT (top10danang style)
+   ============================================= */
+.site-header-minimal {
+  background: white;
+  border-bottom: 1px solid #eef0f2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+.header-minimal-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.minimal-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.minimal-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #5b6a7a;
+  text-decoration: none;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: color 0.2s;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.minimal-nav-item:hover {
+  color: #c0392b;
+}
+.minimal-nav-item svg {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 4px;
+}
+.logo-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+.logo-center .logo-sub {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: #e74c3c;
+  font-weight: 700;
+  margin-bottom: -2px;
+}
+.logo-center .logo-main {
+  font-size: 24px;
+  font-weight: 800;
+  color: #2c3e50;
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+}
+.logo-center .logo-main span {
+  color: #0068ff;
+  margin-left: 2px;
+}
+
+/* Category square grid */
+.minimal-grid-section {
+  padding: 30px 0;
+}
+.square-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 30px;
+}
+.square-card {
+  position: relative;
+  aspect-ratio: 1.5 / 1;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.square-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+.square-card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+  transition: transform 0.4s;
+}
+.square-card:hover .square-card-bg {
+  transform: scale(1.05);
+}
+.square-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  color: white;
+}
+.overlay-blue { background: rgba(41, 128, 185, 0.9); }
+.overlay-red { background: rgba(192, 57, 43, 0.9); }
+.overlay-green { background: rgba(39, 174, 96, 0.9); }
+.overlay-yellow { background: rgba(243, 156, 18, 0.9); }
+.overlay-teal { background: rgba(52, 73, 94, 0.9); }
+.overlay-purple { background: rgba(142, 68, 173, 0.9); }
+
+.square-card-top span {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: rgba(255,255,255,0.2);
+  padding: 4px 8px;
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+.square-card-top h3 {
+  font-size: 17px;
+  font-weight: 800;
+  margin-top: 14px;
+  letter-spacing: 0.5px;
+  line-height: 1.3;
+}
+.square-card-desc {
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.9);
+  margin-top: 6px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.square-btn {
+  align-self: flex-start;
+  background: white;
+  color: #333;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background 0.2s, color 0.2s;
+}
+.square-card:hover .square-btn {
+  background: #333;
+  color: white;
+}
+
+/* Bottom content section */
+.bottom-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.food-highlight {
+  background: white;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+}
+.food-highlight-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #2c3e50;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e74c3c;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.food-main-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.food-main-card {
+  text-decoration: none;
+  color: #333;
+}
+.food-main-img {
+  height: 180px;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.food-main-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.food-main-card:hover .food-main-img img {
+  transform: scale(1.04);
+}
+.food-main-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+.food-main-card p {
+  font-size: 12.5px;
+  color: #666;
+  line-height: 1.5;
+}
+.food-list-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.food-side-item {
+  display: flex;
+  gap: 12px;
+  text-decoration: none;
+  color: #333;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.food-side-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.food-side-thumb {
+  width: 80px;
+  height: 60px;
+  border-radius: 4px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.food-side-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.food-side-info h5 {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.35;
+  margin-bottom: 4px;
+}
+.food-side-info span {
+  font-size: 11px;
+  color: #999;
+}
+
+/* Utilities box */
+.utility-box {
+  background: white;
+  border-radius: 6px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  height: fit-content;
+}
+.utility-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: #2c3e50;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #3498db;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.utility-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.utility-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #475569;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background 0.2s, color 0.2s;
+}
+.utility-item:hover {
+  background: #f1f5f9;
+  color: #3498db;
+}
+.utility-item svg {
+  width: 18px;
+  height: 18px;
+  color: #3498db;
+}
+
+/* Sticky orange ad banner footer */
+.sticky-ad-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #e67e22;
+  color: white;
+  z-index: 998;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+}
+.sticky-ad-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  color: white;
+}
+.sticky-ad-inner .zalo-badge-mini {
+  background: #0068ff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 3px;
+  font-size: 11px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .square-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .bottom-layout {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 600px) {
+  .square-grid {
+    grid-template-columns: 1fr;
+  }
+  .square-card {
+    aspect-ratio: 1.8 / 1;
+  }
+  .food-main-row {
+    grid-template-columns: 1fr;
+  }
+  .header-search {
+    display: none !important;
+  }
+}
+
+
