@@ -87,20 +87,29 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Khai báo cơ sở dữ liệu bài viết tĩnh cho công cụ tìm kiếm
   const articlesDatabase = [
-    { title: "Top 8 Khách Sạn Gần Biển Quy Nhơn Đẹp Nhất 2025", url: "khach-san-quy-nhon.html", category: "khachsan", desc: "View biển, giá hợp lý, resort sang trọng 5 sao, khách sạn trung tâm..." },
-    { title: "Top 10 Bãi Biển Đẹp Nhất Quy Nhơn 2025 – Thiên Đường Biển Việt Nam", url: "bai-bien-quy-nhon.html", category: "dulich", desc: "Kỳ Co, Eo Gió, Bãi Hoàng Hậu, Hòn Khô ngắm san hô..." },
+    { title: "Top 8 Khách Sạn Gần Biển Quy Nhơn Đẹp Nhất 2026", url: "khach-san-quy-nhon.html", category: "khachsan", desc: "View biển, giá hợp lý, resort sang trọng 5 sao, khách sạn trung tâm..." },
+    { title: "Top 10 Bãi Biển Đẹp Nhất Quy Nhơn 2026 – Thiên Đường Biển Việt Nam", url: "bai-bien-quy-nhon.html", category: "dulich", desc: "Kỳ Co, Eo Gió, Bãi Hoàng Hậu, Hòn Khô ngắm san hô..." },
     { title: "Đặc Sản Quy Nhơn – 15 Món Ăn Nhất Định Phải Thử Xứ Nẫu", url: "dac-san-quy-nhon.html", category: "amthuc", desc: "Bánh hỏi cháo lòng, bánh xèo tôm nhảy, tré rơm, nem chợ Huyện..." },
     { title: "Eo Gió Quy Nhơn – Cẩm Nang Du Lịch Check-in Tự Túc A-Z", url: "eo-gio.html", category: "dulich", desc: "Review đường đi Nhơn Lý, giá vé cổng, hoàng hôn bình minh cực đẹp..." },
     { title: "Ghềnh Ráng Tiên Sa – Điểm Đến Thơ Mộng Lãng Mạn Nhất", url: "ghenh-rang.html", category: "dulich", desc: "Viếng mộ nhà thơ Hàn Mặc Tử, check-in Bãi Trứng tròn mịn độc lạ..." },
     { title: "Tháp Đôi Quy Nhơn – Di Tích Lịch Sử Chăm Pa Cổ Đại Huyền Bí", url: "thap-doi.html", category: "dulich", desc: "Kiến trúc tháp Chăm cổ kính độc đáo ngay trung tâm thành phố..." },
-    { title: "Review Top Các Quán Ăn Ngon Nổi Tiếng Nhất Quy Nhơn 2025", url: "quan-an-quy-nhon.html", category: "amthuc", desc: "Hải sản Cine, bánh xèo Gia Vỹ, bún cá Ngọc Liên ngon rẻ..." },
-    { title: "Dịch Vụ Thuê Xe Ô Tô Quy Nhơn – Bảng Giá Tự Lái & Có Tài 2025", url: "thue-xe-quy-nhon.html", category: "dichvu", desc: "Thuê xe du lịch 4 chỗ, 7 chỗ, 16 chỗ đời mới giá rẻ..." },
-    { title: "Tour Du Lịch Quy Nhơn Trọn Gói 2025 – Review 5 Tour Tốt Nhất", url: "tour-quy-nhon.html", category: "dulich", desc: "Đặt tour Kỳ Co Eo Gió, Phú Yên, Tây Sơn chèo đò Hầm Hô..." },
+    { title: "Review Top Các Quán Ăn Ngon Nổi Tiếng Nhất Quy Nhơn 2026", url: "quan-an-quy-nhon.html", category: "amthuc", desc: "Hải sản Cine, bánh xèo Gia Vỹ, bún cá Ngọc Liên ngon rẻ..." },
+    { title: "Dịch Vụ Thuê Xe Ô Tô Quy Nhơn – Bảng Giá Tự Lái & Có Tài 2026", url: "thue-xe-quy-nhon.html", category: "dichvu", desc: "Thuê xe du lịch 4 chỗ, 7 chỗ, 16 chỗ đời mới giá rẻ..." },
+    { title: "Tour Du Lịch Quy Nhơn Trọn Gói 2026 – Review 5 Tour Tốt Nhất", url: "tour-quy-nhon.html", category: "dulich", desc: "Đặt tour Kỳ Co Eo Gió, Phú Yên, Tây Sơn chèo đò Hầm Hô..." },
     { title: "Thợ Sửa Điện Nước Quy Nhơn – 5 Dịch Vụ Uy Tín Phản Hồi Trong 1 Giờ", url: "sua-dien-nuoc-quy-nhon.html", category: "dichvu", desc: "Thợ sửa chập điện gia đình, rò rỉ ống nước bồn cầu lavabo 24/7..." },
     { title: "Trang Trí Gia Tiên Quy Nhơn – 8 Đơn Vị Cưới Hỏi Chuyên Nghiệp", url: "trang-tri-gia-tien.html", category: "dichvu", desc: "Trang trí tiệc cưới, gia tiên, cổng hoa, rạp cưới trọn gói..." },
-    { title: "Kinh Nghiệm Mua Sắm Tại Quy Nhơn – Địa Điểm Mua Quà Đặc Sản", url: "mua-sam-quy-nhon.html", category: "dichvu", desc: "Chợ Lớn Quy Nhơn, chợ đêm Xuân Diệu, siêu thị đặc sản..." },
+    { title: "Kinh Nghiệm Mua Sắm Tại Quy Nhơn – Địa Điểm Mua Quà Đặc Sản", url: "mua-sam-quy-nhon.html", category: "amthuc", desc: "Chợ Lớn Quy Nhơn, chợ đêm Xuân Diệu, siêu thị đặc sản..." },
     { title: "Review Nhà Hàng Hải Sản Cine Quy Nhơn – Sang Trọng, View Biển", url: "hai-san-cine-quy-nhon.html", category: "amthuc", desc: "Cá ngừ đại dương nướng, tôm hùm hấp dừa ngon ngọt..." },
-    { title: "Quà Tặng Đặc Sản Quy Nhơn Bình Định – Top 10 Địa Chỉ Uy Tín", url: "qua-tang-quy-nhon.html", category: "dichvu", desc: "Mua bánh ít lá gai, nem chả tré, rượu bàu đá làm quà biếu..." }
+    { title: "Quà Tặng Đặc Sản Quy Nhơn Bình Định – Top 10 Địa Chỉ Uy Tín", url: "qua-tang-quy-nhon.html", category: "amthuc", desc: "Mua bánh ít lá gai, nem chả tré, rượu bàu đá làm quà biếu..." },
+    { title: "Du Lịch Gia Lai – Cẩm Nang Khám Phá Cao Nguyên Tự Túc", url: "du-lich-gia-lai.html", category: "dulich", desc: "Hồ T'nưng Biển Hồ, núi lửa Chư Đăng Ya, ẩm thực Tây Nguyên..." },
+    { title: "Thuê Homestay Quy Nhơn – Top Homestay Đẹp Giá Rẻ Sát Biển", url: "thue-homestay-quy-nhon.html", category: "khachsan", desc: "Homestay mộc mạc phong cách boho sát biển cho giới trẻ..." },
+    { title: "Top 5 Chợ Nổi Tiếng Quy Nhơn – Hải Sản & Đặc Sản Giá Gốc", url: "cho-noi-tieng-quy-nhon.html", category: "dulich", desc: "Chợ Đầm Quy Nhơn, chợ Đêm, chợ Lớn, chợ làng chài Nhơn Lý..." },
+    { title: "Cho Thuê Xe Máy Quy Nhơn – Top 10 Địa Chỉ Uy Tín Giá Rẻ 80k", url: "thue-xe-may-quy-nhon.html", category: "dichvu", desc: "Thuê xe máy Wave, Sirius, tay ga Vision giao nhận tận nơi..." },
+    { title: "Xe Khách Limousine Quy Nhơn Gia Lai – Các Hãng Xe Tốt Nhất", url: "xe-khach-quy-nhon.html", category: "dichvu", desc: "Đặt xe giường nằm phòng VIP đi Gia Lai Pleiku, Sài Gòn..." },
+    { title: "Dịch Vụ Xe Đưa Đón Sân Bay Phù Cát Quy Nhơn Trọn Gói Giá Rẻ", url: "dua-don-san-bay-quy-nhon.html", category: "dichvu", desc: "Taxi sân bay Phù Cát đi Quy Nhơn 4 chỗ 7 chỗ 16 chỗ đón đúng giờ..." },
+    { title: "Tổ Chức Team Building Quy Nhơn – Kịch Bản & Địa Điểm Cực Chất", url: "team-building-quy-nhon.html", category: "dichvu", desc: "Beach game Kỳ Co, chèo SUP Hòn Khô, trekking dã ngoại..." },
+    { title: "Bệnh Viện & Phòng Khám Y Tế Quy Nhơn Gia Lai Uy Tín Nhất", url: "y-te-quy-nhon.html", category: "dichvu", desc: "Cấp cứu 115, bệnh viện tỉnh Bình Định, phòng khám đa khoa Hòa Mỹ..." },
+    { title: "Những Lưu Ý Quan Trọng Khi Đến Quy Nhơn & Điểm Phạt Nguội", url: "luu-y-quy-nhon.html", category: "dulich", desc: "Kinh nghiệm tắm biển an toàn, vị trí camera giao thông AI..." }
   ];
 
   // Tạo khung kết quả hiển thị dropdown
