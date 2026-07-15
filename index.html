@@ -209,7 +209,10 @@
 
       <!-- ===== DYNAMIC CATEGORY FILTER TABS & ARTICLES GRID ===== -->
       <section class="filter-container">
-        <div class="filter-title">🔍 Lọc nhanh tin tức & cẩm nang Quy Nhơn</div>
+        <div class="filter-title" style="overflow: hidden; line-height: 32px;">
+          <a href="viet-bai.html" style="float: right; font-size: 11px; font-weight: 800; color: #e67e22; text-decoration: none; padding: 4px 12px; border: 2px solid #e67e22; border-radius: 4px; transition: all 0.2s; text-transform: uppercase;" onmouseover="this.style.background='#e67e22'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='#e67e22';">✍️ Đăng Bài Mới</a>
+          🔍 Lọc nhanh tin tức & cẩm nang Quy Nhơn
+        </div>
         <div class="filter-tabs">
           <button class="tab-btn active" data-filter="all">Tất cả</button>
           <button class="tab-btn" data-filter="dulich">🏖️ Du lịch</button>
@@ -344,8 +347,44 @@
       </section>
 
       <script>
-        // JS engine for Dynamic Tabs Filter
+        // JS engine for Dynamic Tabs Filter & LocalStorage Custom Posts
         document.addEventListener('DOMContentLoaded', function() {
+          const articlesGrid = document.getElementById('filter-articles-grid');
+          
+          // 1. Đọc và render các bài viết tự viết từ localStorage vào đầu lưới
+          const customPosts = JSON.parse(localStorage.getItem('custom_posts')) || [];
+          
+          const categoryLabels = {
+            'dulich': 'Du lịch',
+            'amthuc': 'Ẩm thực',
+            'khachsan': 'Lưu trú',
+            'dichvu': 'Dịch vụ'
+          };
+          
+          const categoryClasses = {
+            'dulich': 'cat-dulich',
+            'amthuc': 'cat-amthuc',
+            'khachsan': 'cat-khachsan',
+            'dichvu': 'cat-dichvu'
+          };
+
+          if (customPosts.length > 0 && articlesGrid) {
+            customPosts.forEach(post => {
+              const cardHTML = `
+                <a href="bai-viet-chi-tiet.html?id=${post.id}" class="filter-card" data-cat="${post.category}">
+                  <div class="filter-card-img"><img src="${post.imageUrl}" alt="${post.title}" loading="lazy" /></div>
+                  <div class="filter-card-body">
+                    <span class="filter-card-cat ${categoryClasses[post.category] || 'cat-dulich'}">${categoryLabels[post.category] || 'Cẩm nang'}</span>
+                    <h4>${post.title}</h4>
+                    <span>📅 ${post.date}</span>
+                  </div>
+                </a>
+              `;
+              articlesGrid.insertAdjacentHTML('afterbegin', cardHTML); // Chèn lên đầu lưới
+            });
+          }
+
+          // 2. Thiết lập bộ lọc tab hoạt động cho cả bài viết cũ và bài viết mới thêm vào
           const tabButtons = document.querySelectorAll('.tab-btn');
           const filterCards = document.querySelectorAll('.filter-card');
 
@@ -357,7 +396,9 @@
 
               const filterValue = btn.getAttribute('data-filter');
 
-              filterCards.forEach(card => {
+              // Tìm lại danh sách thẻ mới (sau khi đã chèn thêm các thẻ động)
+              const currentCards = document.querySelectorAll('.filter-card');
+              currentCards.forEach(card => {
                 const cardCat = card.getAttribute('data-cat');
                 if (filterValue === 'all' || cardCat === filterValue) {
                   card.style.display = 'flex';
