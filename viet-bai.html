@@ -3,14 +3,74 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Đăng Bài Viết Mới – Hệ Thống Quản Trị Cẩm Nang Quy Nhơn</title>
-  <meta name="description" content="Hệ thống đăng bài viết, cẩm nang tin tức mới cho website TOP 10 Quy Nhơn.">
+  <title>Quản Trị Viên Đăng Bài Viết – TOP 10 Quy Nhơn</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css?v=3">
   <link rel="stylesheet" href="detail.css?v=3">
   <style>
+    /* Passcode Lock Screen */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: #1e293b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      color: white;
+      text-align: center;
+      font-family: inherit;
+    }
+    .lock-box {
+      background: #0f172a;
+      padding: 40px;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      max-width: 400px;
+      width: 90%;
+    }
+    .lock-box h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .lock-box p {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-bottom: 20px;
+    }
+    .lock-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #334155;
+      background: #1e293b;
+      color: white;
+      border-radius: 4px;
+      text-align: center;
+      font-size: 16px;
+      letter-spacing: 4px;
+      margin-bottom: 16px;
+      box-sizing: border-box;
+    }
+    .lock-btn {
+      background: #e67e22;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.2s;
+    }
+    .lock-btn:hover {
+      background: #d35400;
+    }
+    
+    /* Main Form Styles */
     .form-container {
       background: white;
       border-radius: 8px;
@@ -59,14 +119,45 @@
     .btn-submit:hover {
       background: #d35400;
     }
-    .form-desc {
+
+    /* Output Section */
+    #codeOutputSection {
+      display: none;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 20px;
+      margin-top: 30px;
+    }
+    .code-box {
+      width: 100%;
+      height: 150px;
+      font-family: monospace;
       font-size: 12px;
-      color: #64748b;
-      margin-top: 4px;
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-bottom: 16px;
+      resize: none;
     }
   </style>
 </head>
 <body>
+
+  <!-- ===== PASSCODE LOCK SCREEN ===== -->
+  <div id="lockScreen">
+    <div class="lock-box">
+      <h3>🔑 QUYỀN TRUY CẬP QUẢN TRỊ</h3>
+      <p>Vui lòng nhập mật khẩu quản trị viên để mở khóa chức năng soạn bài viết mới.</p>
+      <input type="password" id="passcode" class="lock-input" placeholder="••••••••" />
+      <button onclick="checkPasscode()" class="lock-btn">XÁC MINH MẬT KHẨU</button>
+      <div id="lockError" style="color: #ef4444; font-size: 12.5px; margin-top: 12px; display: none; font-weight: bold;">Mật khẩu không chính xác!</div>
+    </div>
+  </div>
+
   <!-- ===== TOP BAR ===== -->
   <div class="topbar">
     <div class="container topbar-inner">
@@ -84,27 +175,22 @@
           <span class="logo-dot">.com</span>
         </div>
       </a>
-      <a href="index.html" class="back-btn" style="margin: 0; padding: 8px 16px;">
-        Quay lại trang chủ
-      </a>
+      <a href="index.html" class="back-btn" style="margin: 0; padding: 8px 16px;">Quay lại trang chủ</a>
     </div>
   </header>
 
   <!-- ===== FORM CONTENT ===== -->
   <main class="container" style="max-width: 800px; margin-top: 30px;">
-    <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 10px; text-transform: uppercase;">✍️ Đăng Bài Viết Cẩm Nang Mới</h2>
-    <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Bạn có thể dễ dàng viết bài, chia sẻ kinh nghiệm du lịch, đánh giá dịch vụ hoặc các lưu ý tại Quy Nhơn để chia sẻ đến khách du lịch.</p>
+    <h2 style="font-size: 24px; font-weight: 800; color: #1e293b; margin-bottom: 10px; text-transform: uppercase;">✍️ Soạn Thảo Bài Viết Mới</h2>
+    <p style="color: #64748b; margin-bottom: 24px; font-size: 14px;">Chức năng này giúp bạn viết bài và sinh mã HTML tự động để trợ lý AI đẩy lên mạng cho mọi khách hàng cùng đọc trên toàn thế giới.</p>
 
     <div class="form-container">
       <form id="postForm">
-        
-        <!-- Tiêu đề -->
         <div class="form-group">
           <label for="postTitle">Tiêu đề bài viết *</label>
           <input type="text" id="postTitle" class="form-control" placeholder="Ví dụ: Top 5 quán bánh xèo tôm nhảy ngon nhất Quy Nhơn" required />
         </div>
 
-        <!-- Chuyên mục -->
         <div class="form-group">
           <label for="postCategory">Chuyên mục bài viết *</label>
           <select id="postCategory" class="form-control" required>
@@ -115,9 +201,8 @@
           </select>
         </div>
 
-        <!-- Ảnh đại diện -->
         <div class="form-group">
-          <label for="postImage">Ảnh đại diện bài viết (Link URL ảnh hoặc chọn mẫu) *</label>
+          <label for="postImage">Ảnh đại diện bài viết *</label>
           <select id="postImageSelect" class="form-control" style="margin-bottom: 8px;">
             <option value="images/seafood_restaurant.png">Mẫu ảnh Ẩm thực (Hải sản)</option>
             <option value="images/beach_hotel.png">Mẫu ảnh Du lịch (Bờ biển)</option>
@@ -125,82 +210,109 @@
             <option value="images/repair_service.png">Mẫu ảnh Dịch vụ sửa chữa</option>
             <option value="images/car_rental.png">Mẫu ảnh Thuê xe ô tô</option>
             <option value="images/thue_xe_may.png">Mẫu ảnh Thuê xe máy</option>
-            <option value="custom">Dán link ảnh tùy chọn của riêng bạn</option>
           </select>
-          <input type="url" id="postImageUrl" class="form-control" style="display:none;" placeholder="Dán link ảnh của bạn ở đây (http://...)" value="images/seafood_restaurant.png" />
-          <p class="form-desc">Chọn hình ảnh mẫu có sẵn hoặc chọn dán link ảnh từ nguồn khác.</p>
         </div>
 
-        <!-- Mô tả ngắn -->
         <div class="form-group">
           <label for="postDesc">Mô tả ngắn bài viết *</label>
           <input type="text" id="postDesc" class="form-control" placeholder="Tóm tắt ngắn gọn nội dung bài viết trong 2-3 câu..." required />
         </div>
 
-        <!-- Nội dung bài viết -->
         <div class="form-group">
           <label for="postContent">Nội dung chi tiết bài viết (Hỗ trợ xuống dòng) *</label>
           <textarea id="postContent" class="form-control" rows="12" placeholder="Nhập nội dung bài viết của bạn tại đây..." required></textarea>
         </div>
 
-        <!-- Tên người viết -->
-        <div class="form-group">
-          <label for="postAuthor">Họ tên người viết bài *</label>
-          <input type="text" id="postAuthor" class="form-control" placeholder="Ví dụ: Nguyễn Văn A" required />
-        </div>
-
-        <button type="submit" class="btn-submit">🚀 ĐĂNG BÀI VIẾT NGAY</button>
+        <button type="submit" class="btn-submit">🚀 ĐĂNG BÀI & XUẤT MÃ HTML TOÀN CẦU</button>
       </form>
+
+      <!-- Code Output Section -->
+      <div id="codeOutputSection">
+        <h3 style="font-size: 15px; color: #22c55e; margin-bottom: 12px; font-weight: 800;">🎉 BÀI VIẾT ĐÃ ĐƯỢC LƯU TRÊN TRÌNH DUYỆT CỦA BẠN!</h3>
+        <p style="font-size: 13px; color: #475569; margin-bottom: 16px;">Để bài viết này hiển thị cho **toàn bộ khách hàng trên toàn thế giới** cùng đọc, bạn hãy **Copy (Sao chép) mã bên dưới** và gửi vào khung Chat cho tôi (Trợ lý AI Antigravity), tôi sẽ đăng lên GitHub ngay lập tức!</p>
+        
+        <label style="font-size: 12px; font-weight: 700; display:block; margin-bottom: 6px; color:#1e293b;">MÃ ĐĂNG BÀI TOÀN CẦU:</label>
+        <textarea id="codeOutputText" class="code-box" readonly onclick="this.select()"></textarea>
+        <button onclick="copyCode()" class="lock-btn" style="background:#475569; margin-bottom: 10px;">📋 SAO CHÉP MÃ LÊN BỘ NHỚ TẠM</button>
+        <button onclick="window.location.href='index.html'" class="lock-btn" style="background:#22c55e;">🏠 QUAY VỀ TRANG CHỦ XEM BÀI VIẾT (LOCAL)</button>
+      </div>
     </div>
   </main>
 
   <script>
-    // Xử lý ẩn hiện input link ảnh tùy chọn
-    const select = document.getElementById('postImageSelect');
-    const input = document.getElementById('postImageUrl');
+    // Mật khẩu quản trị mặc định của bạn
+    const ADMIN_PASS = "tainguyen2026";
 
-    select.addEventListener('change', function() {
-      if (select.value === 'custom') {
-        input.style.display = 'block';
-        input.value = '';
+    // Kiểm tra passcode khi mở trang
+    function checkPasscode() {
+      const input = document.getElementById('passcode').value;
+      const errorDiv = document.getElementById('lockError');
+      if (input === ADMIN_PASS) {
+        document.getElementById('lockScreen').style.display = 'none';
       } else {
-        input.style.display = 'none';
-        input.value = select.value;
+        errorDiv.style.display = 'block';
+        setTimeout(() => { errorDiv.style.display = 'none'; }, 2000);
+      }
+    }
+
+    // Nhấn Enter để gửi passcode
+    document.getElementById('passcode').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        checkPasscode();
       }
     });
 
-    // Xử lý gửi form
+    // Xử lý gửi form bài viết
     document.getElementById('postForm').addEventListener('submit', function(e) {
       e.preventDefault();
 
       const title = document.getElementById('postTitle').value;
       const category = document.getElementById('postCategory').value;
-      const imageUrl = input.value || select.value;
+      const imageUrl = document.getElementById('postImageSelect').value;
       const desc = document.getElementById('postDesc').value;
       const content = document.getElementById('postContent').value;
-      const author = document.getElementById('postAuthor').value;
       
+      const postId = "post_" + Date.now();
+      const dateStr = new Date().toLocaleDateString('vi-VN');
+
       const newPost = {
-        id: Date.now().toString(),
+        id: postId,
         title: title,
         category: category,
         imageUrl: imageUrl,
         desc: desc,
         content: content,
-        author: author,
-        date: new Date().toLocaleDateString('vi-VN')
+        author: "Tài Nguyễn",
+        date: dateStr
       };
 
-      // Đọc các bài viết cũ từ localStorage
+      // 1. Lưu local để xem trước ngay tại máy của bạn
       let customPosts = JSON.parse(localStorage.getItem('custom_posts')) || [];
-      customPosts.unshift(newPost); // Thêm bài viết mới vào đầu danh sách
-
-      // Lưu lại vào localStorage
+      customPosts.unshift(newPost);
       localStorage.setItem('custom_posts', JSON.stringify(customPosts));
 
-      alert('Đăng bài viết mới thành công! Bạn sẽ được chuyển hướng về trang chủ để xem bài viết.');
-      window.location.href = 'index.html';
+      // 2. Xuất mã HTML toàn cầu để gửi cho trợ lý AI Antigravity
+      const globalCode = `[COMMAND: PUBLISH_POST]
+TITLE: ${title}
+CATEGORY: ${category}
+IMAGE: ${imageUrl}
+DESC: ${desc}
+CONTENT: ${content}
+DATE: ${dateStr}
+[/COMMAND]`;
+
+      document.getElementById('codeOutputText').value = globalCode;
+      document.getElementById('codeOutputSection').style.display = 'block';
+      document.getElementById('postForm').style.display = 'none';
     });
+
+    function copyCode() {
+      const copyText = document.getElementById("codeOutputText");
+      copyText.select();
+      copyText.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(copyText.value);
+      alert("Đã sao chép mã thành công! Hãy dán mã này vào khung chat với AI.");
+    }
   </script>
 </body>
 </html>
