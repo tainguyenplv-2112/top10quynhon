@@ -1026,6 +1026,11 @@
       <!-- Real Google Authentication Button Container -->
       <div id="googleBtnDiv" style="display:flex; justify-content:center; margin-bottom:12px; min-height:40px;"></div>
       
+      <!-- Fallback quick test login for developer -->
+      <button class="social-login-btn btn-google" onclick="fallbackAdminLogin()" style="border: 1.5px dashed #e67e22; color: #e67e22; font-size:12px; margin-bottom: 12px; display:flex; align-items:center; justify-content:center; gap:8px;">
+        <span>⚙️</span> ĐĂNG NHẬP THỬ NGHIỆM (QUYỀN ADMIN)
+      </button>
+      
       <button class="social-login-btn btn-facebook" onclick="loginWithFacebook()">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
         Tiếp tục bằng Facebook
@@ -1113,6 +1118,20 @@
         if (loginBtn) loginBtn.style.display = 'flex';
         if (userProfile) userProfile.style.display = 'none';
       }
+    }
+
+    // Đăng nhập thử nghiệm bỏ qua Client ID dành riêng cho nhà phát triển
+    function fallbackAdminLogin() {
+      const userSession = {
+        name: "Tài Nguyễn",
+        email: "tainguyenplv@gmail.com",
+        avatar: "images/homestay.png",
+        role: "admin"
+      };
+      sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
+      closeLoginModal();
+      updateAuthUI();
+      alert('Đăng nhập thử nghiệm thành công dưới quyền Admin: Tài Nguyễn!');
     }
 
     // --- REAL GOOGLE OAUTH 2.0 API SIGN-IN SYSTEM ---
