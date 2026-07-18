@@ -76,6 +76,27 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
           LIÊN HỆ
         </a>
+        
+        <!-- User account menu / Login button -->
+        <div class="user-menu-container" id="userMenuContainer" style="margin-left: 8px;">
+          <button class="minimal-nav-item" id="loginBtn" onclick="openLoginModal()" style="border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 4px 14px; font-weight:700; display:flex; align-items:center; gap:4px;">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            ĐĂNG NHẬP
+          </button>
+          
+          <div id="userProfile" style="display: none; align-items: center;">
+            <button class="user-profile-btn" onclick="toggleUserDropdown(event)">
+              <img id="userAvatarImg" src="images/beach_hotel.png" alt="Avatar" class="user-avatar" />
+              <span id="userProfileName">Tài Nguyễn</span>
+              <svg viewBox="0 0 24 24" width="10" height="10" fill="none" stroke="currentColor" stroke-width="3"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            </button>
+            <div class="user-dropdown" id="userDropdown">
+              <a href="viet-bai.html" class="user-dropdown-item" id="writePostLink" style="display:none; font-weight:700; color:#e67e22;">✍️ Viết Bài Mới</a>
+              <button class="user-dropdown-item" onclick="alert('Tính năng cài đặt tài khoản đang phát triển!')">Cài đặt tài khoản</button>
+              <button class="user-dropdown-item" onclick="logoutUser()">Đăng xuất</button>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -992,6 +1013,41 @@
   <!-- ===== SCROLL TO TOP ===== -->
   <button class="scroll-top" id="scroll-top" aria-label="Lên đầu trang" style="bottom: 70px;">&#9650;</button>
 
+  <!-- ===== LOGIN / REGISTER MODAL OVERLAY ===== -->
+  <div class="modal-overlay" id="loginModalOverlay">
+    <div class="login-modal">
+      <button class="modal-close" onclick="closeLoginModal()">&times;</button>
+      <h3 class="login-title">Đăng Nhập Tài Khoản</h3>
+      <p class="login-desc">Hãy kết nối tài khoản để nhận đầy đủ cẩm nang du lịch và quyền đăng bài viết</p>
+      
+      <!-- OAuth Social login buttons -->
+      <button class="social-login-btn btn-google" onclick="loginWithGoogle()">
+        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.68 1.54 14.98 1 12 1 7.35 1 3.37 3.65 1.42 7.53l3.86 3C6.22 7.74 8.89 5.04 12 5.04z"/><path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58l3.76 2.91c2.2-2.03 3.67-5.01 3.67-8.64z"/><path fill="#FBBC05" d="M5.28 14.47c-.25-.74-.39-1.53-.39-2.35s.14-1.61.39-2.35L1.42 6.77C.52 8.57 0 10.58 0 12.7s.52 4.13 1.42 5.93l3.86-3z"/><path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.76-2.91c-1.1.74-2.5 1.18-4.2 1.18-3.11 0-5.78-2.7-6.72-5.49l-3.86 3C3.37 20.35 7.35 23 12 23z"/></svg>
+        Tiếp tục bằng Google
+      </button>
+      
+      <button class="social-login-btn btn-facebook" onclick="loginWithFacebook()">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        Tiếp tục bằng Facebook
+      </button>
+      
+      <div class="login-divider">Hoặc bằng Số điện thoại</div>
+      
+      <!-- Phone OTP form -->
+      <div id="phoneForm">
+        <input type="tel" id="phoneNumberInput" class="form-control" placeholder="Nhập số điện thoại của bạn..." style="margin-bottom:10px; text-align:center; font-size:14px;" />
+        <button class="btn-submit" onclick="sendMockOTP()" style="padding:10px 20px; font-size:13px;">GỬI MÃ XÁC MINH OTP</button>
+      </div>
+      
+      <div id="otpForm" style="display:none;">
+        <p style="font-size:11.5px; color:#27ae60; font-weight:700; margin-bottom:8px;">Mã OTP đã gửi! Nhập 123456 để đăng nhập mô phỏng.</p>
+        <input type="text" id="otpCodeInput" class="form-control" placeholder="Nhập mã OTP 6 số..." style="margin-bottom:10px; text-align:center; font-size:14px; letter-spacing:4px;" />
+        <button class="btn-submit" onclick="verifyMockOTP()" style="padding:10px 20px; font-size:13px; background:#27ae60;">XÁC NHẬN ĐĂNG NHẬP</button>
+      </div>
+
+    </div>
+  </div>
+
   <script src="script.js?v=2"></script>
   <script>
     // Hamburger drawer menu toggle
@@ -1002,6 +1058,218 @@
       } else {
         nav.style.display = 'none';
       }
+    });
+
+    // --- USER MANAGEMENT & MOCK AUTH SYSTEM ---
+    
+    function openLoginModal() {
+      document.getElementById('loginModalOverlay').classList.add('active');
+    }
+    
+    function closeLoginModal() {
+      document.getElementById('loginModalOverlay').classList.remove('active');
+      // Reset forms
+      document.getElementById('phoneForm').style.display = 'block';
+      document.getElementById('otpForm').style.display = 'none';
+      document.getElementById('phoneNumberInput').value = '';
+      document.getElementById('otpCodeInput').value = '';
+    }
+
+    function toggleUserDropdown(event) {
+      event.stopPropagation();
+      document.getElementById('userDropdown').classList.toggle('active');
+    }
+
+    // Close dropdown on click outside
+    document.addEventListener('click', function() {
+      const dropdown = document.getElementById('userDropdown');
+      if (dropdown) dropdown.classList.remove('active');
+    });
+
+    // Cập nhật giao diện khi đã đăng nhập
+    function updateAuthUI() {
+      const user = JSON.parse(sessionStorage.getItem('logged_in_user'));
+      const loginBtn = document.getElementById('loginBtn');
+      const userProfile = document.getElementById('userProfile');
+      const userProfileName = document.getElementById('userProfileName');
+      const userAvatarImg = document.getElementById('userAvatarImg');
+      const writePostLink = document.getElementById('writePostLink');
+
+      if (user) {
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (userProfile) userProfile.style.display = 'flex';
+        if (userProfileName) userProfileName.innerText = user.name;
+        if (userAvatarImg) userAvatarImg.src = user.avatar;
+        
+        // Chỉ tài khoản quản trị "Tài Nguyễn" mới được phép mở khóa và thấy trang viết bài!
+        if (writePostLink) {
+          if (user.role === 'admin' || user.name === 'Tài Nguyễn') {
+            writePostLink.style.display = 'block';
+          } else {
+            writePostLink.style.display = 'none';
+          }
+        }
+      } else {
+        if (loginBtn) loginBtn.style.display = 'flex';
+        if (userProfile) userProfile.style.display = 'none';
+      }
+    }
+
+    // Đăng nhập bằng Google (mô phỏng cửa sổ OAuth thật của Google)
+    function loginWithGoogle() {
+      const width = 500, height = 600;
+      const left = (screen.width - width) / 2;
+      const top = (screen.height - height) / 2;
+      
+      const popup = window.open('', 'GoogleLogin', `width=${width},height=${height},left=${left},top=${top}`);
+      
+      popup.document.write(`
+        <html>
+        <head>
+          <title>Đăng nhập bằng tài khoản Google</title>
+          <style>
+            body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f8fafc; }
+            .login-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 320px; }
+            .logo { font-size: 24px; font-weight: bold; margin-bottom: 20px; }
+            .logo span:nth-child(1) { color: #4285F4; }
+            .logo span:nth-child(2) { color: #EA4335; }
+            .logo span:nth-child(3) { color: #FBBC05; }
+            .logo span:nth-child(4) { color: #34A853; }
+            .btn { background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+          </style>
+        </head>
+        <body>
+          <div class="login-card">
+            <div class="logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
+            <p style="font-size: 14px; color: #5f6368;">Đăng nhập để tiếp tục đến <strong>TOP 10 Quy Nhơn</strong></p>
+            <div style="border: 1px solid #dadce0; padding: 12px; border-radius: 4px; text-align: left; margin: 15px 0; cursor: pointer;" onclick="selectAccount('Tài Nguyễn', 'tainguyenplv@gmail.com')">
+              <strong style="display:block; font-size:13px;">Tài Nguyễn (Admin)</strong>
+              <span style="font-size:11px; color:#5f6368;">tainguyenplv@gmail.com</span>
+            </div>
+            <div style="border: 1px solid #dadce0; padding: 12px; border-radius: 4px; text-align: left; margin-bottom: 15px; cursor: pointer;" onclick="selectAccount('Khách du lịch', 'visitor@gmail.com')">
+              <strong style="display:block; font-size:13px;">Khách du lịch Google</strong>
+              <span style="font-size:11px; color:#5f6368;">visitor@gmail.com</span>
+            </div>
+          </div>
+          <script>
+            function selectAccount(name, email) {
+              window.opener.postMessage({ type: 'GOOGLE_LOGIN_SUCCESS', name: name, email: email }, '*');
+              window.close();
+            }
+          <\/script>
+        </body>
+        </html>
+      `);
+
+      // Lắng nghe kết quả gửi về từ Popup
+      window.addEventListener('message', function authListener(event) {
+        if (event.data && event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
+          const userSession = {
+            name: event.data.name,
+            email: event.data.email,
+            avatar: event.data.name === 'Tài Nguyễn' ? 'images/homestay.png' : 'images/beach_hotel.png',
+            role: event.data.name === 'Tài Nguyễn' ? 'admin' : 'user'
+          };
+          sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
+          closeLoginModal();
+          updateAuthUI();
+          window.removeEventListener('message', authListener);
+        }
+      });
+    }
+
+    // Đăng nhập bằng Facebook
+    function loginWithFacebook() {
+      const width = 500, height = 600;
+      const left = (screen.width - width) / 2;
+      const top = (screen.height - height) / 2;
+      
+      const popup = window.open('', 'FacebookLogin', `width=${width},height=${height},left=${left},top=${top}`);
+      
+      popup.document.write(`
+        <html>
+        <head>
+          <title>Đăng nhập bằng Facebook</title>
+          <style>
+            body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f0f2f5; }
+            .login-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 320px; }
+            .logo { font-size: 26px; font-weight: bold; color: #1877f2; margin-bottom: 20px; }
+            .btn { background: #1877f2; color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; box-sizing: border-box; }
+          </style>
+        </head>
+        <body>
+          <div class="login-card">
+            <div class="logo">facebook</div>
+            <p style="font-size: 14px; color: #606770;">Tiếp tục đăng nhập bằng tài khoản Facebook của bạn</p>
+            <button class="btn" onclick="confirmLogin()">Tiếp tục dưới tên Tài Nguyễn</button>
+          </div>
+          <script>
+            function confirmLogin() {
+              window.opener.postMessage({ type: 'FB_LOGIN_SUCCESS', name: 'Tài Nguyễn' }, '*');
+              window.close();
+            }
+          <\/script>
+        </body>
+        </html>
+      `);
+
+      window.addEventListener('message', function authListener(event) {
+        if (event.data && event.data.type === 'FB_LOGIN_SUCCESS') {
+          const userSession = {
+            name: event.data.name,
+            email: 'tainguyenplv@gmail.com',
+            avatar: 'images/homestay.png',
+            role: 'admin'
+          };
+          sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
+          closeLoginModal();
+          updateAuthUI();
+          window.removeEventListener('message', authListener);
+        }
+      });
+    }
+
+    // Đăng nhập bằng số điện thoại
+    function sendMockOTP() {
+      const phone = document.getElementById('phoneNumberInput').value.trim();
+      if (!phone) {
+        alert('Vui lòng nhập số điện thoại hợp lệ!');
+        return;
+      }
+      
+      // Chuyển sang form nhập OTP
+      document.getElementById('phoneForm').style.display = 'none';
+      document.getElementById('otpForm').style.display = 'block';
+      document.getElementById('otpCodeInput').focus();
+    }
+
+    function verifyMockOTP() {
+      const code = document.getElementById('otpCodeInput').value.trim();
+      if (code === '123456') {
+        const phone = document.getElementById('phoneNumberInput').value.trim();
+        const userSession = {
+          name: 'Khách ' + phone.substring(phone.length - 4),
+          email: 'phone@gmail.com',
+          avatar: 'images/beach_hotel.png',
+          role: 'user'
+        };
+        sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
+        closeLoginModal();
+        updateAuthUI();
+      } else {
+        alert('Mã OTP không đúng! Vui lòng nhập lại (Mã mẫu: 123456)');
+      }
+    }
+
+    function logoutUser() {
+      sessionStorage.removeItem('logged_in_user');
+      updateAuthUI();
+      alert('Đăng xuất thành công!');
+    }
+
+    // Khởi chạy khi tải trang
+    document.addEventListener('DOMContentLoaded', function() {
+      updateAuthUI();
     });
   </script>
 </body>
