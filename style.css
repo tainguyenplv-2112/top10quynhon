@@ -1618,7 +1618,183 @@ ul { list-style: none; }
   .filter-articles-grid { grid-template-columns: 1fr; }
 }
 
+/* =============================================
+   LOGIN MODAL & USER STATUS
+   ============================================= */
+.user-menu-container {
+  position: relative;
+  display: inline-block;
+}
+.user-profile-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #334155;
+  font-weight: 700;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: background 0.2s;
+  text-transform: uppercase;
+}
+.user-profile-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.user-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1.5px solid #e67e22;
+}
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: white;
+  min-width: 190px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  padding: 8px 0;
+  margin-top: 8px;
+  display: none;
+  z-index: 99999;
+}
+.user-dropdown.active {
+  display: block;
+}
+.user-dropdown-item {
+  display: block;
+  padding: 10px 16px;
+  font-size: 12.5px;
+  color: #334155;
+  text-decoration: none;
+  transition: background 0.2s;
+  text-align: left;
+  border: none;
+  background: none;
+  width: 100%;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+}
+.user-dropdown-item:hover {
+  background: #f8fafc;
+  color: #e67e22;
+}
 
+/* Modal Overlay */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+.login-modal {
+  background: white;
+  width: 100%;
+  max-width: 380px;
+  border-radius: 8px;
+  box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+  padding: 28px;
+  text-align: center;
+  position: relative;
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+  box-sizing: border-box;
+}
+.modal-overlay.active .login-modal {
+  transform: translateY(0);
+}
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: none;
+  border: none;
+  font-size: 22px;
+  color: #94a3b8;
+  cursor: pointer;
+  line-height: 1;
+}
+.login-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+.login-desc {
+  font-size: 12.5px;
+  color: #64748b;
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
 
+/* OAuth buttons */
+.social-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 4px;
+  border: 1.5px solid #cbd5e1;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 10px;
+  background: white;
+  font-family: inherit;
+}
+.social-login-btn:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+}
+.social-login-btn.btn-google {
+  color: #334155;
+}
+.social-login-btn.btn-facebook {
+  background: #1877f2;
+  color: white;
+  border-color: #1877f2;
+}
+.social-login-btn.btn-facebook:hover {
+  background: #166fe5;
+}
 
-
+/* Divider */
+.login-divider {
+  display: flex;
+  align-items: center;
+  margin: 16px 0;
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.login-divider::before, .login-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e2e8f0;
+}
+.login-divider::before { margin-right: 12px; }
+.login-divider::after { margin-left: 12px; }
