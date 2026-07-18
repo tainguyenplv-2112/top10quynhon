@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css?v=3" />
   
+  <!-- Google Identity Services SDK for Real Google Sign-In -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  
   <!-- Schema.org JSON-LD Structured Data for LocalBusiness SEO -->
   <script type="application/ld+json">
   {
@@ -1020,11 +1023,8 @@
       <h3 class="login-title">Đăng Nhập Tài Khoản</h3>
       <p class="login-desc">Hãy kết nối tài khoản để nhận đầy đủ cẩm nang du lịch và quyền đăng bài viết</p>
       
-      <!-- OAuth Social login buttons -->
-      <button class="social-login-btn btn-google" onclick="loginWithGoogle()">
-        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#EA4335" d="M12 5.04c1.66 0 3.2.57 4.38 1.69l3.27-3.27C17.68 1.54 14.98 1 12 1 7.35 1 3.37 3.65 1.42 7.53l3.86 3C6.22 7.74 8.89 5.04 12 5.04z"/><path fill="#4285F4" d="M23.49 12.27c0-.81-.07-1.59-.2-2.36H12v4.51h6.46c-.29 1.48-1.14 2.73-2.4 3.58l3.76 2.91c2.2-2.03 3.67-5.01 3.67-8.64z"/><path fill="#FBBC05" d="M5.28 14.47c-.25-.74-.39-1.53-.39-2.35s.14-1.61.39-2.35L1.42 6.77C.52 8.57 0 10.58 0 12.7s.52 4.13 1.42 5.93l3.86-3z"/><path fill="#34A853" d="M12 23c3.24 0 5.97-1.07 7.96-2.91l-3.76-2.91c-1.1.74-2.5 1.18-4.2 1.18-3.11 0-5.78-2.7-6.72-5.49l-3.86 3C3.37 20.35 7.35 23 12 23z"/></svg>
-        Tiếp tục bằng Google
-      </button>
+      <!-- Real Google Authentication Button Container -->
+      <div id="googleBtnDiv" style="display:flex; justify-content:center; margin-bottom:12px; min-height:40px;"></div>
       
       <button class="social-login-btn btn-facebook" onclick="loginWithFacebook()">
         <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
@@ -1115,67 +1115,49 @@
       }
     }
 
-    // Đăng nhập bằng Google (mô phỏng cửa sổ OAuth thật của Google)
-    function loginWithGoogle() {
-      const width = 500, height = 600;
-      const left = (screen.width - width) / 2;
-      const top = (screen.height - height) / 2;
-      
-      const popup = window.open('', 'GoogleLogin', `width=${width},height=${height},left=${left},top=${top}`);
-      
-      popup.document.write(`
-        <html>
-        <head>
-          <title>Đăng nhập bằng tài khoản Google</title>
-          <style>
-            body { font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background: #f8fafc; }
-            .login-card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; max-width: 320px; }
-            .logo { font-size: 24px; font-weight: bold; margin-bottom: 20px; }
-            .logo span:nth-child(1) { color: #4285F4; }
-            .logo span:nth-child(2) { color: #EA4335; }
-            .logo span:nth-child(3) { color: #FBBC05; }
-            .logo span:nth-child(4) { color: #34A853; }
-            .btn { background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: 15px; }
-          </style>
-        </head>
-        <body>
-          <div class="login-card">
-            <div class="logo"><span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span></div>
-            <p style="font-size: 14px; color: #5f6368;">Đăng nhập để tiếp tục đến <strong>TOP 10 Quy Nhơn</strong></p>
-            <div style="border: 1px solid #dadce0; padding: 12px; border-radius: 4px; text-align: left; margin: 15px 0; cursor: pointer;" onclick="selectAccount('Tài Nguyễn', 'tainguyenplv@gmail.com')">
-              <strong style="display:block; font-size:13px;">Tài Nguyễn (Admin)</strong>
-              <span style="font-size:11px; color:#5f6368;">tainguyenplv@gmail.com</span>
-            </div>
-            <div style="border: 1px solid #dadce0; padding: 12px; border-radius: 4px; text-align: left; margin-bottom: 15px; cursor: pointer;" onclick="selectAccount('Khách du lịch', 'visitor@gmail.com')">
-              <strong style="display:block; font-size:13px;">Khách du lịch Google</strong>
-              <span style="font-size:11px; color:#5f6368;">visitor@gmail.com</span>
-            </div>
-          </div>
-          <script>
-            function selectAccount(name, email) {
-              window.opener.postMessage({ type: 'GOOGLE_LOGIN_SUCCESS', name: name, email: email }, '*');
-              window.close();
-            }
-          <\/script>
-        </body>
-        </html>
-      `);
+    // --- REAL GOOGLE OAUTH 2.0 API SIGN-IN SYSTEM ---
+    const GOOGLE_CLIENT_ID = "1094363294326-pb66c74k0n8p3d5mvf9q8rjefdf9n4j8.apps.googleusercontent.com"; 
+    // Gợi ý: Hãy thay chuỗi trên bằng Google Client ID thật của bạn từ console.cloud.google.com
 
-      // Lắng nghe kết quả gửi về từ Popup
-      window.addEventListener('message', function authListener(event) {
-        if (event.data && event.data.type === 'GOOGLE_LOGIN_SUCCESS') {
-          const userSession = {
-            name: event.data.name,
-            email: event.data.email,
-            avatar: event.data.name === 'Tài Nguyễn' ? 'images/homestay.png' : 'images/beach_hotel.png',
-            role: event.data.name === 'Tài Nguyễn' ? 'admin' : 'user'
-          };
-          sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
-          closeLoginModal();
-          updateAuthUI();
-          window.removeEventListener('message', authListener);
-        }
-      });
+    function initializeGoogleSignIn() {
+      if (typeof google !== 'undefined') {
+        google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: handleGoogleCredentialResponse
+        });
+        google.accounts.id.renderButton(
+          document.getElementById("googleBtnDiv"),
+          { theme: "outline", size: "large", width: 280, text: "signin_with" }
+        );
+      } else {
+        // Thử lại sau 500ms nếu script SDK chưa kịp load xong
+        setTimeout(initializeGoogleSignIn, 500);
+      }
+    }
+
+    function handleGoogleCredentialResponse(response) {
+      // Giải mã mã token JWT chính thức được Google ký số bảo mật
+      const payload = decodeJwtResponse(response.credential);
+      
+      const userSession = {
+        name: payload.name,
+        email: payload.email,
+        avatar: payload.picture,
+        role: payload.email === 'tainguyenplv@gmail.com' ? 'admin' : 'user'
+      };
+      sessionStorage.setItem('logged_in_user', JSON.stringify(userSession));
+      closeLoginModal();
+      updateAuthUI();
+      alert('Đăng nhập thành công bằng tài khoản Google: ' + payload.name);
+    }
+
+    function decodeJwtResponse(token) {
+      var base64Url = token.split('.')[1];
+      var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
     }
 
     // Đăng nhập bằng Facebook
@@ -1270,6 +1252,7 @@
     // Khởi chạy khi tải trang
     document.addEventListener('DOMContentLoaded', function() {
       updateAuthUI();
+      initializeGoogleSignIn(); // Khởi động nút đăng nhập Google API thật
     });
   </script>
 </body>
