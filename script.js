@@ -192,22 +192,36 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   if (searchBtn && searchInput) {
-    searchBtn.addEventListener('click', function() {
+    function executeSearch() {
       const q = searchInput.value.trim();
-      if (q) {
-        // Nếu không ở trang chủ, chuyển hướng về trang chủ kèm tham số tìm kiếm
+      if (!q) return;
+
+      const qLower = q.toLowerCase();
+      const matches = articlesDatabase.filter(art => 
+        art.title.toLowerCase().includes(qLower) || 
+        art.desc.toLowerCase().includes(qLower)
+      );
+
+      if (matches.length > 0) {
+        // Mở trực tiếp bài viết tìm thấy phù hợp nhất
+        window.location.href = matches[0].url;
+      } else {
+        // Chuyển về trang chủ kèm tham số lọc từ khóa
         if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/' && !window.location.pathname.endsWith('top10quynhon/')) {
           window.location.href = 'index.html?search=' + encodeURIComponent(q);
         } else {
-          // Lọc các thẻ trên trang chủ theo kết quả tìm kiếm
           filterBySearchKeyword(q);
         }
       }
+    }
+
+    searchBtn.addEventListener('click', function() {
+      executeSearch();
     });
 
     searchInput.addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
-        searchBtn.click();
+        executeSearch();
       }
     });
   }
