@@ -1,6 +1,13 @@
-// =============================================
-//  TOP 10 QUY NHƠN – MAIN SCRIPT
-// =============================================
+// Register Service Worker for offline asset caching and superfast page load speeds
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('./sw.js').then(function(registration) {
+      console.log('ServiceWorker registered with scope: ', registration.scope);
+    }, function(err) {
+      console.log('ServiceWorker registration failed: ', err);
+    });
+  });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -109,7 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
     { title: "Dịch Vụ Xe Đưa Đón Sân Bay Phù Cát Quy Nhơn Trọn Gói Giá Rẻ", url: "dua-don-san-bay-quy-nhon.html", category: "dichvu", desc: "Taxi sân bay Phù Cát đi Quy Nhơn 4 chỗ 7 chỗ 16 chỗ đón đúng giờ..." },
     { title: "Tổ Chức Team Building Quy Nhơn – Kịch Bản & Địa Điểm Cực Chất", url: "team-building-quy-nhon.html", category: "dichvu", desc: "Beach game Kỳ Co, chèo SUP Hòn Khô, trekking dã ngoại..." },
     { title: "Bệnh Viện & Phòng Khám Y Tế Quy Nhơn Gia Lai Uy Tín Nhất", url: "y-te-quy-nhon.html", category: "dichvu", desc: "Cấp cứu 115, bệnh viện tỉnh Bình Định, phòng khám đa khoa Hòa Mỹ..." },
-    { title: "Những Lưu Ý Quan Trọng Khi Đến Quy Nhơn & Điểm Phạt Nguội", url: "luu-y-quy-nhon.html", category: "dulich", desc: "Kinh nghiệm tắm biển an toàn, vị trí camera giao thông AI..." }
+    { title: "Những Lưu Ý Quan Trọng Khi Đến Quy Nhơn & Điểm Phạt Nguội", url: "luu-y-quy-nhon.html", category: "dulich", desc: "Kinh nghiệm tắm biển an toàn, vị trí camera giao thông AI..." },
+    { title: "Bảo Tàng Quang Trung Tây Sơn Bình Định – Hướng Dẫn Chi Tiết 2026", url: "bao-tang-quang-trung.html", category: "dulich", desc: "Xem nhạc võ Tây Sơn, viếng điện thờ Tam Kiệt, cây me giếng nước cổ..." },
+    { title: "Đàn Tế Trời Đất Tây Sơn Bình Định – Cẩm Nang Hành Hương 2026", url: "dan-te-troi.html", category: "dulich", desc: "Lịch sử ấn sơn linh thiêng, lễ tế trời đất xin ban bảo kiếm vương triều..." },
+    { title: "Tháp Dương Long Bình Định – Cụm Tháp Gạch Cao Nhất Đông Nam Á", url: "thap-duong-long.html", category: "dulich", desc: "Di tích kiến trúc Champa đỉnh cao, ba ngọn tháp gạch chạm đá sa thạch..." }
   ];
 
   // Tạo khung kết quả hiển thị dropdown
