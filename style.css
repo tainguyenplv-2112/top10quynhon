@@ -1924,3 +1924,22 @@ section, .transport-section, .food-section, .utility-section, .cat-boxes-section
 .zalo-btn .zalo-text { display: none !important; }
 .zalo-btn .zalo-icon { font-size: 20px; font-weight: 800; }
 
+/* 6. Balanced Grid Alignment for Landmarks Section */
+#landmarks-section .transport-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 960px) {
+  #landmarks-section .transport-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  #landmarks-section .transport-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
