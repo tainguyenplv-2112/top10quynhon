@@ -1924,22 +1924,24 @@ section, .transport-section, .food-section, .utility-section, .cat-boxes-section
 .zalo-btn .zalo-text { display: none !important; }
 .zalo-btn .zalo-icon { font-size: 20px; font-weight: 800; }
 
-/* 6. Balanced Grid Alignment for Landmarks Section */
-#landmarks-section .transport-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+/* 6. Balanced Symmetrical Grid Alignment For ALL Sections */
+.transport-grid, .filter-articles-grid, .square-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
 }
 
 @media (max-width: 960px) {
-  #landmarks-section .transport-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .transport-grid, .filter-articles-grid, .square-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
   }
 }
 
 @media (max-width: 580px) {
-  #landmarks-section .transport-grid {
-    grid-template-columns: 1fr;
+  .transport-grid, .filter-articles-grid, .square-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
   }
 }
 
