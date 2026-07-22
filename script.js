@@ -266,30 +266,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ---- Category Tabs Filter (index.html) ----
-  const tabButtons = document.querySelectorAll('.tab-btn');
+  const tabButtons = document.querySelectorAll('.tab-btn, .tab-pill-btn');
   if (tabButtons.length > 0) {
     tabButtons.forEach(btn => {
       btn.addEventListener('click', function() {
-        // Đổi active class
+        // Đổi active class cho tất cả các nút tab
         tabButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
         const filterValue = btn.getAttribute('data-filter');
-        const cards = document.querySelectorAll('.featured-grid .card, .article-row, .cat-card');
+        const cards = document.querySelectorAll('.filter-card, .transport-card, .food-main-card, .food-side-item, .utility-item, .category-card, .event-item, .place-card');
 
         cards.forEach(card => {
-          // Xác định danh mục của thẻ dựa trên id hoặc class
-          let cardCat = 'other';
+          const cat = card.getAttribute('data-cat') || '';
+          const html = card.innerHTML.toLowerCase();
+          const href = (card.getAttribute('href') || '').toLowerCase();
           
-          if (card.id.includes('hotel') || card.id.includes('khachsan') || card.innerHTML.includes('khach-san')) {
-            cardCat = 'khachsan';
-          } else if (card.id.includes('repair') || card.id.includes('dichvu') || card.id.includes('gift') || card.id.includes('sam') || card.id.includes('tri') || card.innerHTML.includes('sua-dien-nuoc') || card.innerHTML.includes('trang-tri') || card.innerHTML.includes('mua-sam') || card.innerHTML.includes('qua-tang')) {
-            cardCat = 'dichvu';
-          } else if (card.id.includes('seafood') || card.id.includes('food') || card.id.includes('quan-an') || card.innerHTML.includes('dac-san') || card.innerHTML.includes('quan-an') || card.innerHTML.includes('hai-san')) {
-            cardCat = 'amthuc';
-          } else if (card.id.includes('dulich') || card.id.includes('gio') || card.id.includes('rang') || card.id.includes('doi') || card.innerHTML.includes('eo-gio') || card.innerHTML.includes('ghenh-rang') || card.innerHTML.includes('thap-doi') || card.innerHTML.includes('bai-bien') || card.innerHTML.includes('tour')) {
-            cardCat = 'dulich';
-          }
 
           if (filterValue === 'all' || cardCat === filterValue) {
             card.style.display = '';
