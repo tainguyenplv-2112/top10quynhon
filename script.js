@@ -119,7 +119,8 @@ document.addEventListener('DOMContentLoaded', function () {
     { title: "Những Lưu Ý Quan Trọng Khi Đến Quy Nhơn & Điểm Phạt Nguội", url: "luu-y-quy-nhon.html", category: "dulich", desc: "Kinh nghiệm tắm biển an toàn, vị trí camera giao thông AI..." },
     { title: "Bảo Tàng Quang Trung Tây Sơn Bình Định – Hướng Dẫn Chi Tiết 2026", url: "bao-tang-quang-trung.html", category: "dulich", desc: "Xem nhạc võ Tây Sơn, viếng điện thờ Tam Kiệt, cây me giếng nước cổ..." },
     { title: "Đàn Tế Trời Đất Tây Sơn Bình Định – Cẩm Nang Hành Hương 2026", url: "dan-te-troi.html", category: "dulich", desc: "Lịch sử ấn sơn linh thiêng, lễ tế trời đất xin ban bảo kiếm vương triều..." },
-    { title: "Tháp Dương Long Bình Định – Cụm Tháp Gạch Cao Nhất Đông Nam Á", url: "thap-duong-long.html", category: "dulich", desc: "Di tích kiến trúc Champa đỉnh cao, ba ngọn tháp gạch chạm đá sa thạch..." }
+    { title: "Tháp Dương Long Bình Định – Cụm Tháp Gạch Cao Nhất Đông Nam Á", url: "thap-duong-long.html", category: "dulich", desc: "Di tích kiến trúc Champa đỉnh cao, ba ngọn tháp gạch chạm đá sa thạch..." },
+    { title: "Khu Du Lịch Sinh Thái Hầm Hô Tây Sơn – Vịnh Hạ Long Thu Nhỏ Bình Định", url: "ham-ho.html", category: "dulich", desc: "Đi thuyền chèo ngắm suối Kút, vách đá hoa granite lấp lánh, cá mương cuốn bánh tráng..." }
   ];
 
   // Tạo khung kết quả hiển thị dropdown
