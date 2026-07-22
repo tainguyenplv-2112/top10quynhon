@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
     { title: "Ghềnh Ráng Tiên Sa – Điểm Đến Thơ Mộng Lãng Mạn Nhất", url: "ghenh-rang.html", category: "dulich", desc: "Viếng mộ nhà thơ Hàn Mặc Tử, check-in Bãi Trứng tròn mịn độc lạ..." },
     { title: "Tháp Đôi Quy Nhơn – Di Tích Lịch Sử Chăm Pa Cổ Đại Huyền Bí", url: "thap-doi.html", category: "dulich", desc: "Kiến trúc tháp Chăm cổ kính độc đáo ngay trung tâm thành phố..." },
     { title: "Review Top Các Quán Ăn Ngon Nổi Tiếng Nhất Quy Nhơn 2026", url: "quan-an-quy-nhon.html", category: "amthuc", desc: "Hải sản Cine, bánh xèo Gia Vỹ, bún cá Ngọc Liên ngon rẻ..." },
-    { title: "Dịch Vụ Thuê Xe Ô Tô Quy Nhơn – Bảng Giá Tự Lái & Có Tài 2026", url: "thue-xe-quy-nhon.html", category: "dichvu", desc: "Thuê xe du lịch 4 chỗ, 7 chỗ, 16 chỗ đời mới giá rẻ..." },
+    { title: "Dịch Vụ Thuê Xe Ô Tô & Gọi Xe Quy Nhơn – Bảng Giá Tự Lái & Có Tài 2026", url: "thue-xe-quy-nhon.html", category: "dichvu", desc: "Gọi xe, đặt xe, thuê xe du lịch 4 chỗ, 7 chỗ, 16 chỗ đời mới giá rẻ..." },
     { title: "Tour Du Lịch Quy Nhơn Trọn Gói 2026 – Review 5 Tour Tốt Nhất", url: "tour-quy-nhon.html", category: "dulich", desc: "Đặt tour Kỳ Co Eo Gió, Phú Yên, Tây Sơn chèo đò Hầm Hô..." },
     { title: "Thợ Sửa Điện Nước Quy Nhơn – 5 Dịch Vụ Uy Tín Phản Hồi Trong 1 Giờ", url: "sua-dien-nuoc-quy-nhon.html", category: "dichvu", desc: "Thợ sửa chập điện gia đình, rò rỉ ống nước bồn cầu lavabo 24/7..." },
     { title: "Trang Trí Gia Tiên Quy Nhơn – 8 Đơn Vị Cưới Hỏi Chuyên Nghiệp", url: "trang-tri-gia-tien.html", category: "dichvu", desc: "Trang trí tiệc cưới, gia tiên, cổng hoa, rạp cưới trọn gói..." },
@@ -203,10 +203,10 @@ document.addEventListener('DOMContentLoaded', function () {
       );
 
       if (matches.length > 0) {
-        // Mở trực tiếp bài viết tìm thấy phù hợp nhất
+        // Mở trực tiếp bài viết phù hợp nhất ngay lập tức
         window.location.href = matches[0].url;
       } else {
-        // Chuyển về trang chủ kèm tham số lọc từ khóa
+        // Nếu ở trang khác, về trang chủ kèm tham số từ khóa
         if (!window.location.pathname.endsWith('index.html') && window.location.pathname !== '/' && !window.location.pathname.endsWith('top10quynhon/')) {
           window.location.href = 'index.html?search=' + encodeURIComponent(q);
         } else {
@@ -238,21 +238,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function filterBySearchKeyword(keyword) {
     keyword = keyword.toLowerCase().trim();
-    const cards = document.querySelectorAll('.featured-grid .card, .article-row, .cat-card');
-    let foundAny = false;
+    if (!keyword) return;
+
+    // Chọn tất cả các thẻ nội dung trên trang chủ
+    const cards = document.querySelectorAll('.transport-card, .food-main-card, .food-side-item, .utility-item, .category-card, .event-item, .place-card, .card');
+    let count = 0;
     
     cards.forEach(card => {
       const text = card.textContent.toLowerCase();
       if (text.includes(keyword)) {
         card.style.display = '';
         card.style.opacity = '1';
-        card.style.transform = 'scale(1)';
-        foundAny = true;
+        count++;
       } else {
         card.style.display = 'none';
       }
     });
-    searchDropdown.style.display = 'none';
+
+    if (searchDropdown) searchDropdown.style.display = 'none';
+    
+    // Nếu không tìm thấy thẻ nào khớp từ khóa ngẫu nhiên, tự động khôi phục giao diện và hiển thị thông báo
+    if (count === 0 && cards.length > 0) {
+      alert('Không tìm thấy bài viết phù hợp với từ khóa "' + keyword + '". Hệ thống sẽ hiển thị toàn bộ cẩm nang du lịch cho bạn!');
+      cards.forEach(card => { card.style.display = ''; card.style.opacity = '1'; });
+    }
   }
 
   // ---- Category Tabs Filter (index.html) ----
