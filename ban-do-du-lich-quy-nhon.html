@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5">
-  <link rel="stylesheet" href="detail.css?v=5">
+  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="detail.css?v=6">
 
   <!-- Leaflet CSS & JS for Interactive Map -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
@@ -19,20 +19,22 @@
     .map-header-banner {
       background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
       color: white;
-      padding: 32px 0;
+      padding: 36px 0;
       text-align: center;
       margin-bottom: 24px;
+      position: relative;
+      overflow: hidden;
     }
     .map-header-banner h1 {
-      font-size: 26px;
+      font-size: 28px;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       letter-spacing: 0.5px;
     }
     .map-header-banner p {
-      font-size: 14px;
-      opacity: 0.9;
-      max-width: 680px;
+      font-size: 14.5px;
+      opacity: 0.95;
+      max-width: 720px;
       margin: 0 auto;
     }
     
@@ -41,7 +43,7 @@
       justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
-      margin-bottom: 24px;
+      margin-bottom: 20px;
     }
     .map-filter-btn {
       padding: 10px 20px;
@@ -65,6 +67,35 @@
       box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
     }
 
+    .map-search-input-box {
+      max-width: 500px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+    .map-search-input-box input {
+      width: 100%;
+      padding: 12px 20px 12px 42px;
+      border-radius: 30px;
+      border: 2px solid #e2e8f0;
+      font-size: 14px;
+      font-weight: 600;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .map-search-input-box input:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 4px rgba(2, 132, 199, 0.15);
+    }
+    .map-search-input-box svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      color: #94a3b8;
+    }
+
     .map-main-layout {
       display: grid;
       grid-template-columns: 360px 1fr;
@@ -77,7 +108,7 @@
     }
 
     #map-container {
-      height: 600px;
+      height: 620px;
       border-radius: 16px;
       border: 2px solid #e2e8f0;
       box-shadow: 0 4px 20px rgba(0,0,0,0.08);
@@ -85,7 +116,7 @@
     }
 
     .map-list-panel {
-      max-height: 600px;
+      max-height: 620px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
@@ -112,8 +143,8 @@
       box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
     }
     .map-item-thumb {
-      width: 80px;
-      height: 70px;
+      width: 84px;
+      height: 72px;
       border-radius: 8px;
       overflow: hidden;
       flex-shrink: 0;
@@ -144,10 +175,10 @@
     }
     .leaflet-popup-content {
       margin: 0;
-      width: 240px !important;
+      width: 250px !important;
     }
     .popup-card-img {
-      height: 110px;
+      height: 115px;
       width: 100%;
       object-fit: cover;
     }
@@ -173,7 +204,7 @@
   <div class="weather-topbar" style="background: linear-gradient(90deg, #0284c7 0%, #0d9488 100%); color: white; padding: 6px 0; font-size: 12px; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
     <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
       <div style="display: flex; align-items: center; gap: 8px;">
-        <span style="background: rgba(255,255,255,0.22); padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.5px;">📍 QUY NHƠN HÔM NAY</span>
+        <span style="background: rgba(255,255,255,0.22); padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.5px;">📍 QUY NHƠN LIVE</span>
         <span>☀️ 29°C | Nắng Đẹp Rực Rỡ</span>
         <span style="opacity: 0.6;">•</span>
         <span>🌊 Sóng Biển 0.5m (Êm Dịu)</span>
@@ -214,7 +245,7 @@
   <section class="map-header-banner">
     <div class="container">
       <h1>🗺️ Bản Đồ Du Lịch Quy Nhơn Tương Tác 2026</h1>
-      <p>Tra cứu vị trí bãi biển Kỳ Co, Eo Gió, Hầm Hô, địa điểm ăn uống, khách sạn & bấm định vị dẫn đường Google Maps 1-Click trực tiếp!</p>
+      <p>Tra cứu vị trí bãi biển Kỳ Co, Eo Gió, Hầm Hô, nhà hàng hải sản, khách sạn homestay & định vị chỉ đường Google Maps 1-Click trực tiếp!</p>
     </div>
   </section>
 
@@ -228,6 +259,12 @@
       <button class="map-filter-btn" onclick="filterMap('amthuc', this)">🍲 Ẩm Thực & Quán Ăn</button>
       <button class="map-filter-btn" onclick="filterMap('khachsan', this)">🏨 Khách Sạn & Homestay</button>
       <button class="map-filter-btn" onclick="filterMap('checkin', this)">📸 Điểm Check-in Nổi Tiếng</button>
+    </div>
+
+    <!-- Quick Search Bar inside Map -->
+    <div class="map-search-input-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" id="mapSearchInput" placeholder="Gõ tìm nhanh địa điểm (Ví dụ: Kỳ Co, Eo Gió, Cine, Anantara...)" oninput="handleMapSearch()">
     </div>
 
     <!-- Map & List Layout -->
@@ -314,9 +351,9 @@
 
     let map;
     let markersList = [];
+    let currentCategory = 'all';
 
     function initMap() {
-      // Centered at Quy Nhơn city
       map = L.map('map-container').setView([13.7820, 109.2194], 11);
 
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -327,18 +364,26 @@
       renderPlaces('all');
     }
 
-    function renderPlaces(category) {
-      // Clear markers
+    function renderPlaces(category, query = '') {
       markersList.forEach(m => map.removeLayer(m));
       markersList = [];
 
       const listPanel = document.getElementById('map-list-panel');
       listPanel.innerHTML = '';
 
-      const filtered = category === 'all' ? placesData : placesData.filter(p => p.cat === category);
+      let filtered = category === 'all' ? placesData : placesData.filter(p => p.cat === category);
+
+      if (query.trim() !== '') {
+        const q = query.toLowerCase().trim();
+        filtered = filtered.filter(p => p.name.toLowerCase().includes(q) || p.address.toLowerCase().includes(q));
+      }
+
+      if (filtered.length === 0) {
+        listPanel.innerHTML = '<div style="padding:20px; text-align:center; color:#94a3b8; font-weight:600;">Không tìm thấy địa điểm phù hợp.</div>';
+        return;
+      }
 
       filtered.forEach(place => {
-        // Create Leaflet Marker
         const marker = L.marker([place.lat, place.lng]).addTo(map);
         
         const popupContent = `
@@ -354,7 +399,6 @@
         marker.bindPopup(popupContent);
         markersList.push(marker);
 
-        // Build list card on side panel
         const card = document.createElement('div');
         card.className = 'map-item-card';
         card.onclick = () => {
@@ -382,9 +426,16 @@
     }
 
     function filterMap(cat, btn) {
+      currentCategory = cat;
       document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      renderPlaces(cat);
+      const q = document.getElementById('mapSearchInput').value;
+      renderPlaces(cat, q);
+    }
+
+    function handleMapSearch() {
+      const q = document.getElementById('mapSearchInput').value;
+      renderPlaces(currentCategory, q);
     }
 
     document.addEventListener('DOMContentLoaded', initMap);
