@@ -213,18 +213,21 @@
   margin: 0 0 8px;
 }
 .tag {
-  display: inline-block;
-  background: #f0f0f0;
-  color: #555;
-  font-size: 11px;
-  padding: 3px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #f0fdf4;
+  color: #15803d;
+  font-size: 12px;
+  padding: 5px 14px;
   border-radius: 20px;
   font-weight: 600;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #bbf7d0;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
 }
-.tag.green { background: #e8faf0; color: #1a7a4a; border-color: #b2dfcc; }
-.tag.red   { background: #fde8e8; color: #a93226; border-color: #f5b7b1; }
-.tag.blue  { background: #e8f4fd; color: #1a5276; border-color: #aed6f1; }
+.tag.green { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+.tag.red   { background: #fef2f2; color: #dc2626; border-color: #fecaca; }
+.tag.blue  { background: #f0f9ff; color: #0284c7; border-color: #bae6fd; }
 
 /* ---- INFO TABLE ---- */
 .info-table {
