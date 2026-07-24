@@ -2093,3 +2093,76 @@ section, .transport-section, .food-section, .utility-section, .cat-boxes-section
   }
 }
 
+/* 9. Unified Large Full-Width Images for Sub-Cards (Fix small image bug) */
+.food-list-side {
+  display: grid !important;
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 16px !important;
+  margin-top: 16px !important;
+}
+
+@media (max-width: 600px) {
+  .food-list-side {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.food-side-item {
+  display: flex !important;
+  flex-direction: column !important;
+  background: #ffffff !important;
+  border-radius: 14px !important;
+  border: 1.5px solid #e2e8f0 !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04) !important;
+  overflow: hidden !important;
+  text-decoration: none !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  padding: 0 !important;
+}
+
+.food-side-item:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08) !important;
+}
+
+.food-side-thumb {
+  width: 100% !important;
+  height: 180px !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  flex-shrink: 0 !important;
+}
+
+.food-side-thumb img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transition: transform 0.3s ease !important;
+}
+
+.food-side-item:hover .food-side-thumb img {
+  transform: scale(1.05) !important;
+}
+
+.food-side-info {
+  padding: 14px 16px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  flex-grow: 1 !important;
+}
+
+.food-side-info h5 {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  line-height: 1.45 !important;
+  color: #0f172a !important;
+  margin-bottom: 8px !important;
+}
+
+.food-side-info span {
+  font-size: 11.5px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+}
+
