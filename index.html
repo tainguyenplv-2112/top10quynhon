@@ -818,6 +818,93 @@
         </div>
       </section>
 
+      <!-- ===== HOMEPAGE TRIP COST CALCULATOR SECTION ===== -->
+      <section class="calculator-section" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 32px 28px; margin-bottom: 36px; box-shadow: 0 4px 24px rgba(0,0,0,0.05);">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; background: #eff6ff; color: #2563eb; padding: 4px 14px; border-radius: 20px;">CÔNG CỤ THÔNG MINH 5 GiÂY</span>
+          <h2 style="font-size: 22px; font-weight: 800; color: #0f172a; margin-top: 8px; margin-bottom: 6px;">🧮 Dự Tính Chi Phí Du Lịch Quy Nhơn 2026</h2>
+          <p style="font-size: 13.5px; color: #64748b; max-width: 600px; margin: 0 auto;">Chọn nhanh số ngày, số lượng người và phong cách trải nghiệm để hệ thống tự động tính toán tổng chi phí ước tính trong 5 giây!</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;">
+          
+          <!-- Left Column: Input Selectors -->
+          <div style="background: #f8fafc; padding: 22px; border-radius: 14px; border: 1px solid #e2e8f0;">
+            
+            <!-- Option 1: Days -->
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">1. Chọn số ngày du lịch *</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <button type="button" class="calc-btn active" data-type="days" data-value="2" onclick="selectCalcOption(this)">2 Ngày 1 Đêm</button>
+                <button type="button" class="calc-btn" data-type="days" data-value="3" onclick="selectCalcOption(this)">3 Ngày 2 Đêm</button>
+                <button type="button" class="calc-btn" data-type="days" data-value="4" onclick="selectCalcOption(this)">4 Ngày 3 Đêm</button>
+              </div>
+            </div>
+
+            <!-- Option 2: People -->
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">2. Chọn số lượng du khách *</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px;">
+                <button type="button" class="calc-btn" data-type="people" data-value="1" onclick="selectCalcOption(this)">1 Người</button>
+                <button type="button" class="calc-btn active" data-type="people" data-value="2" onclick="selectCalcOption(this)">2 Người</button>
+                <button type="button" class="calc-btn" data-type="people" data-value="4" onclick="selectCalcOption(this)">4 Người</button>
+                <button type="button" class="calc-btn" data-type="people" data-value="6" onclick="selectCalcOption(this)">6+ Người</button>
+              </div>
+            </div>
+
+            <!-- Option 3: Style -->
+            <div style="margin-bottom: 16px;">
+              <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">3. Chọn kiểu lưu trú *</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button type="button" class="calc-btn active" data-type="style" data-value="homestay" onclick="selectCalcOption(this)">Homestay / Khách sạn 2-3★</button>
+                <button type="button" class="calc-btn" data-type="style" data-value="resort" onclick="selectCalcOption(this)">Resort 4-5★ Sang Trọng</button>
+              </div>
+            </div>
+
+            <!-- Option 4: Vehicle -->
+            <div>
+              <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">4. Phương tiện di chuyển *</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button type="button" class="calc-btn active" data-type="vehicle" data-value="motorbike" onclick="selectCalcOption(this)">🛵 Thuê xe máy</button>
+                <button type="button" class="calc-btn" data-type="vehicle" data-value="car" onclick="selectCalcOption(this)">🚗 Thuê xe ô tô 4-7 chỗ</button>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right Column: Result Output Box -->
+          <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; padding: 24px; border-radius: 14px; box-shadow: 0 6px 20px rgba(15, 23, 42, 0.25);">
+            <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; background: rgba(255,255,255,0.15); padding: 3px 10px; border-radius: 20px; color: #a7f3d0;">KẾT QUẢ DỰ TÍNH CHI PHÍ</span>
+            
+            <div style="margin-top: 14px; margin-bottom: 18px;">
+              <div style="font-size: 12px; color: #94a3b8;">Ước tính chi phí bình quân:</div>
+              <div id="calcPerPersonCost" style="font-size: 32px; font-weight: 800; color: #38bdf8; line-height: 1.2;">1.850.000đ <span style="font-size: 14px; font-weight: 600; color: #cbd5e1;">/ người</span></div>
+              <div id="calcTotalCost" style="font-size: 12.5px; color: #a7f3d0; font-weight: 700; margin-top: 4px;">👉 Tổng chuyến đi (2 người): 3.700.000đ</div>
+            </div>
+
+            <!-- Detail breakdown list -->
+            <div style="background: rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; font-size: 12.5px; line-height: 1.6; margin-bottom: 20px;">
+              <div style="font-weight: 800; color: #f1f5f9; margin-bottom: 6px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 4px;">📊 Chi tiết ngân sách dự kiến:</div>
+              <div id="calcBreakdownStay">🏨 Tiền lưu trú (1 đêm): ~600.000đ</div>
+              <div id="calcBreakdownTour">🚤 Tour Cano Kỳ Co + Lặn San Hô: ~1.400.000đ</div>
+              <div id="calcBreakdownFood">🍲 Ăn uống hải sản & đặc sản: ~1.200.000đ</div>
+              <div id="calcBreakdownVehicle">🛵 Xe máy + xăng xe: ~500.000đ</div>
+            </div>
+
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <a href="https://zalo.me/0345173287" target="_blank" rel="noopener" style="flex: 1; min-width: 140px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; background: #0068ff; color: white; font-weight: 800; font-size: 12.5px; border-radius: 25px; text-decoration: none; box-shadow: 0 4px 12px rgba(0,104,255,0.3);">
+                💬 Đặt Lịch Qua Zalo
+              </a>
+              <a href="khach-san-quy-nhon.html" style="flex: 1; min-width: 140px; display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px 16px; background: rgba(255,255,255,0.15); color: white; font-weight: 800; font-size: 12.5px; border-radius: 25px; text-decoration: none; border: 1px solid rgba(255,255,255,0.2);">
+                🏨 Xem Khách Sạn Gợi Ý
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
       <!-- ===== SECTION 4: LƯU TRÚ TẠI QUY NHƠN (two-col layout) ===== -->
       <div class="bottom-layout" style="margin-bottom: 28px;">
         
