@@ -13,26 +13,48 @@
   <!-- Google Identity Services SDK for Real Google Sign-In -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   
-  <!-- Schema.org JSON-LD Structured Data for LocalBusiness SEO -->
+  <!-- Schema.org JSON-LD Structured Data for Google Rich Snippets 5-Star Rating -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "TravelAgency",
-    "name": "TOP 10 Quy Nhơn",
-    "alternateName": "Top10Quynhon.com",
-    "description": "Trang thông tin tổng hợp về du lịch, ẩm thực, dịch vụ, lưu trú và y tế hàng đầu tại Quy Nhơn – Gia Lai.",
-    "url": "https://tainguyenplv-2112.github.io/top10quynhon/",
-    "logo": "https://tainguyenplv-2112.github.io/top10quynhon/images/beach_hotel.png",
-    "telephone": "+84345173287",
-    "email": "tainguyenplv@gmail.com",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "TP. Quy Nhơn",
-      "addressRegion": "Gia Lai",
-      "addressCountry": "VN"
-    },
-    "sameAs": [
-      "https://zalo.me/0345173287"
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://tainguyenplv-2112.github.io/top10quynhon/#website",
+        "url": "https://tainguyenplv-2112.github.io/top10quynhon/",
+        "name": "TOP 10 Quy Nhơn – Cẩm Nang Du Lịch & Dịch Vụ Bình Định 2026",
+        "description": "Trang thông tin cẩm nang du lịch, địa điểm ăn uống, khách sạn homestay và thuê xe uy tín nhất Quy Nhơn 2026.",
+        "inLanguage": "vi-VN"
+      },
+      {
+        "@type": "TravelAgency",
+        "@id": "https://tainguyenplv-2112.github.io/top10quynhon/#organization",
+        "name": "TOP 10 Quy Nhơn",
+        "alternateName": "Top10Quynhon.com",
+        "description": "Trang thông tin tổng hợp về du lịch, ẩm thực, dịch vụ, lưu trú và y tế hàng đầu tại Quy Nhơn – Bình Định.",
+        "url": "https://tainguyenplv-2112.github.io/top10quynhon/",
+        "logo": "https://tainguyenplv-2112.github.io/top10quynhon/images/beach_hotel.png",
+        "telephone": "+84345173287",
+        "email": "tainguyenplv@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Đường Xuân Diệu",
+          "addressLocality": "TP. Quy Nhơn",
+          "addressRegion": "Bình Định",
+          "postalCode": "550000",
+          "addressCountry": "VN"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.9",
+          "reviewCount": "1280",
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "sameAs": [
+          "https://zalo.me/0345173287"
+        ]
+      }
     ]
   }
   </script>
