@@ -252,10 +252,43 @@
                     <div class="comment-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
                   </div>
                 </div>
-                <span class="comment-date">06/07/2026</span>
-              </div>
-              <p class="comment-text">Lặng homestay rất có gu cổ kính mộc mạc, anh chủ hiếu khách hỗ trợ tụi mình thuê xe máy giá rẻ đi chơi phố. Nhất định sẽ quay lại!</p>
             </div>
+          </div>
+
+          <!-- Live User Review Form -->
+          <div class="add-review-box">
+            <h4>✍️ Gửi Đánh Giá & Cảm Nhận Của Bạn</h4>
+            <form id="reviewForm" onsubmit="submitUserReview(event)">
+              <div class="review-form-row">
+                <div class="review-form-group">
+                  <label for="reviewName">Họ và tên của bạn *</label>
+                  <input type="text" id="reviewName" required placeholder="Nhập họ tên (Ví dụ: Minh Anh)...">
+                </div>
+                <div class="review-form-group">
+                  <label>Đánh giá số sao *</label>
+                  <div class="star-rating-select" id="starRatingSelect">
+                    <span data-star="1" onclick="setStarRating(1)">★</span>
+                    <span data-star="2" onclick="setStarRating(2)">★</span>
+                    <span data-star="3" onclick="setStarRating(3)">★</span>
+                    <span data-star="4" onclick="setStarRating(4)">★</span>
+                    <span data-star="5" class="active" onclick="setStarRating(5)">★</span>
+                  </div>
+                  <input type="hidden" id="reviewRating" value="5">
+                </div>
+              </div>
+              <div class="review-form-group">
+                <label for="reviewText">Nội dung cảm nhận & trải nghiệm thực tế *</label>
+                <textarea id="reviewText" required rows="3" placeholder="Chia sẻ cảm nhận thực tế, khen ngợi hoặc lời khuyên cho khách du lịch khác..."></textarea>
+              </div>
+              <div class="review-form-group">
+                <label for="reviewImage">Tải lên hình ảnh chụp thực tế (Không bắt buộc)</label>
+                <input type="file" id="reviewImage" accept="image/*" onchange="previewReviewImage(event)">
+                <div id="imagePreviewContainer" style="display:none; margin-top:8px;">
+                  <img id="imagePreview" src="" alt="Preview" style="max-height:120px; border-radius:8px; border:1px solid #e2e8f0;">
+                </div>
+              </div>
+              <button type="submit" class="submit-review-btn">🚀 Gửi Đánh Giá Ngay</button>
+            </form>
           </div>
         </section>
       </article>
