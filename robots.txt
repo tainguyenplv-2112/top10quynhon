@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tainguyenplv-2112.github.io/top10quynhon/sitemap.xml
