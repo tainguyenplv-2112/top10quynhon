@@ -297,8 +297,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // ---- REALTIME WEATHER & OCEAN WAVE API INTEGRATION ----
+  // ---- REALTIME WEATHER & OCEAN WAVE API INTEGRATION (With 10-Min Instant Cache) ----
   async function fetchRealtimeWeather() {
+    const cachedWeather = sessionStorage.getItem('cached_weather_payload');
+    const cachedTime = sessionStorage.getItem('cached_weather_time');
+    const now = Date.now();
+    
+    if (cachedWeather && cachedTime && (now - parseInt(cachedTime) < 600000)) {
+      try {
+        applyWeatherDataPayload(JSON.parse(cachedWeather));
+        return;
+      } catch (e) {}
+    }
+    
     try {
       const weatherRes = await fetch('https://api.open-meteo.com/v1/forecast?latitude=13.7820&longitude=109.2194&current_weather=true');
       const weatherData = await weatherRes.json();
@@ -306,56 +317,64 @@ document.addEventListener('DOMContentLoaded', function () {
       const marineRes = await fetch('https://marine-api.open-meteo.com/v1/marine?latitude=13.7820&longitude=109.2194&current=wave_height');
       const marineData = await marineRes.json();
       
-      if (weatherData && weatherData.current_weather) {
-        const temp = Math.round(weatherData.current_weather.temperature);
-        const code = weatherData.current_weather.weathercode;
-        const wind = Math.round(weatherData.current_weather.windspeed);
-        const wave = (marineData && marineData.current && marineData.current.wave_height) ? marineData.current.wave_height : 0.5;
-        
-        let statusText = "Nắng Đẹp Rực Rỡ";
-        let icon = "☀️";
-        if (code === 0) { statusText = "Trời Nắng Đẹp"; icon = "☀️"; }
-        else if (code >= 1 && code <= 3) { statusText = "Nắng Nhẹ Mây Thoáng"; icon = "🌤️"; }
-        else if (code >= 51 && code <= 67) { statusText = "Có Mưa Nhẹ"; icon = "🌧️"; }
-        else if (code >= 80 && code <= 99) { statusText = "Có Mưa Dông"; icon = "⛈️"; }
-        
-        let seaText = `Sóng Biển ${wave.toFixed(1)}m • Êm Dịu`;
-        let canoStatus = "Đi Tốt 100%";
-        let adviceText = "Thời tiết nắng đẹp cực kỳ lý tưởng để đi cano lặn ngắm san hô Kỳ Co - Eo Gió và chèo thuyền gỗ Hầm Hô!";
-        
-        if (wave > 1.2) {
-          seaText = `Sóng Biển ${wave.toFixed(1)}m • Động Nhẹ`;
-          canoStatus = "Cân Nhắc Tùy Giờ";
-          adviceText = "Sóng biển hơi lớn, quý khách nên hỏi kỹ nhà tour trước khi xuống cano ra đảo Kỳ Co!";
-        } else if (wave > 2.0) {
-          seaText = `Sóng Biển ${wave.toFixed(1)}m • Biển Động`;
-          canoStatus = "Tạm Tắt Cano";
-          adviceText = "Biển động sóng lớn, khuyên du khách nên chuyển hướng tham quan Bảo tàng Quang Trung, Tháp Đôi!";
-        }
-        
-        const topbarText = document.getElementById('topbarWeatherText');
-        const waveText = document.getElementById('topbarWaveText');
-        const adviceTextElem = document.getElementById('topbarAdviceText');
-        if (topbarText) topbarText.innerText = `${icon} ${temp}°C | ${statusText}`;
-        if (waveText) waveText.innerText = `🌊 ${seaText}`;
-        if (adviceTextElem) adviceTextElem.innerHTML = `💡 <strong>Khuyên Dùng:</strong> ${adviceText}`;
-        
-        const widgetTemp = document.getElementById('widgetLiveTemp');
-        const widgetDesc = document.getElementById('widgetLiveDesc');
-        const widgetWave = document.getElementById('widgetLiveWave');
-        const widgetCano = document.getElementById('widgetLiveCano');
-        const widgetAdvice = document.getElementById('widgetLiveAdvice');
-        const widgetIcon = document.getElementById('widgetLiveIcon');
-        
-        if (widgetTemp) widgetTemp.innerText = `${temp}°C`;
-        if (widgetDesc) widgetDesc.innerText = `${statusText}, gió ${wind}km/h`;
-        if (widgetWave) widgetWave.innerText = `${wave.toFixed(1)}m • ${wave > 1.2 ? 'Động Nhẹ' : 'Êm Dịu'}`;
-        if (widgetCano) widgetCano.innerText = canoStatus;
-        if (widgetAdvice) widgetAdvice.innerHTML = `💡 <strong>Khuyên dùng hôm nay:</strong> ${adviceText}`;
-        if (widgetIcon) widgetIcon.innerText = icon;
-      }
+      const payload = { weatherData, marineData };
+      sessionStorage.setItem('cached_weather_payload', JSON.stringify(payload));
+      sessionStorage.setItem('cached_weather_time', now.toString());
+      
+      applyWeatherDataPayload(payload);
     } catch (err) {
       console.log('Realtime weather active in default mode:', err);
+    }
+  }
+
+  function applyWeatherDataPayload({ weatherData, marineData }) {
+    if (weatherData && weatherData.current_weather) {
+      const temp = Math.round(weatherData.current_weather.temperature);
+      const code = weatherData.current_weather.weathercode;
+      const wind = Math.round(weatherData.current_weather.windspeed);
+      const wave = (marineData && marineData.current && marineData.current.wave_height) ? marineData.current.wave_height : 0.5;
+      
+      let statusText = "Nắng Đẹp Rực Rỡ";
+      let icon = "☀️";
+      if (code === 0) { statusText = "Trời Nắng Đẹp"; icon = "☀️"; }
+      else if (code >= 1 && code <= 3) { statusText = "Nắng Nhẹ Mây Thoáng"; icon = "🌤️"; }
+      else if (code >= 51 && code <= 67) { statusText = "Có Mưa Nhẹ"; icon = "🌧️"; }
+      else if (code >= 80 && code <= 99) { statusText = "Có Mưa Dông"; icon = "⛈️"; }
+      
+      let seaText = `Sóng Biển ${wave.toFixed(1)}m • Êm Dịu`;
+      let canoStatus = "Đi Tốt 100%";
+      let adviceText = "Thời tiết nắng đẹp cực kỳ lý tưởng để đi cano lặn ngắm san hô Kỳ Co - Eo Gió và chèo thuyền gỗ Hầm Hô!";
+      
+      if (wave > 1.2) {
+        seaText = `Sóng Biển ${wave.toFixed(1)}m • Động Nhẹ`;
+        canoStatus = "Cân Nhắc Tùy Giờ";
+        adviceText = "Sóng biển hơi lớn, quý khách nên hỏi kỹ nhà tour trước khi xuống cano ra đảo Kỳ Co!";
+      } else if (wave > 2.0) {
+        seaText = `Sóng Biển ${wave.toFixed(1)}m • Biển Động`;
+        canoStatus = "Tạm Tắt Cano";
+        adviceText = "Biển động sóng lớn, khuyên du khách nên chuyển hướng tham quan Bảo tàng Quang Trung, Tháp Đôi!";
+      }
+      
+      const topbarText = document.getElementById('topbarWeatherText');
+      const waveText = document.getElementById('topbarWaveText');
+      const adviceTextElem = document.getElementById('topbarAdviceText');
+      if (topbarText) topbarText.innerText = `${icon} ${temp}°C | ${statusText}`;
+      if (waveText) waveText.innerText = `🌊 ${seaText}`;
+      if (adviceTextElem) adviceTextElem.innerHTML = `💡 <strong>Khuyên Dùng:</strong> ${adviceText}`;
+      
+      const widgetTemp = document.getElementById('widgetLiveTemp');
+      const widgetDesc = document.getElementById('widgetLiveDesc');
+      const widgetWave = document.getElementById('widgetLiveWave');
+      const widgetCano = document.getElementById('widgetLiveCano');
+      const widgetAdvice = document.getElementById('widgetLiveAdvice');
+      const widgetIcon = document.getElementById('widgetLiveIcon');
+      
+      if (widgetTemp) widgetTemp.innerText = `${temp}°C`;
+      if (widgetDesc) widgetDesc.innerText = `${statusText}, gió ${wind}km/h`;
+      if (widgetWave) widgetWave.innerText = `${wave.toFixed(1)}m • ${wave > 1.2 ? 'Động Nhẹ' : 'Êm Dịu'}`;
+      if (widgetCano) widgetCano.innerText = canoStatus;
+      if (widgetAdvice) widgetAdvice.innerHTML = `💡 <strong>Khuyên dùng hôm nay:</strong> ${adviceText}`;
+      if (widgetIcon) widgetIcon.innerText = icon;
     }
   }
 
