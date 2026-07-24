@@ -862,11 +862,20 @@
             </div>
 
             <!-- Option 4: Vehicle -->
-            <div>
+            <div style="margin-bottom: 16px;">
               <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">4. Phương tiện di chuyển *</label>
               <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
                 <button type="button" class="calc-btn active" data-type="vehicle" data-value="motorbike" onclick="selectCalcOption(this)">🛵 Thuê xe máy</button>
                 <button type="button" class="calc-btn" data-type="vehicle" data-value="car" onclick="selectCalcOption(this)">🚗 Thuê xe ô tô 4-7 chỗ</button>
+              </div>
+            </div>
+
+            <!-- Option 5: Scope (Full package vs Room only) -->
+            <div>
+              <label style="font-size: 13px; font-weight: 700; color: #334155; display: block; margin-bottom: 8px;">5. Nhu cầu dịch vụ *</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button type="button" class="calc-btn active" data-type="scope" data-value="full" onclick="selectCalcOption(this)">✨ Trọn gói (Phòng + Tour + Xe + Ăn)</button>
+                <button type="button" class="calc-btn" data-type="scope" data-value="room_only" onclick="selectCalcOption(this)">🏨 Chỉ thuê phòng nghỉ</button>
               </div>
             </div>
 
