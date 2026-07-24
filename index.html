@@ -76,16 +76,22 @@
     </div>
   </div>
 
-  <!-- ===== MINIMALIST HEADER (top10danang style) ===== -->
+  <!-- ===== MINIMALIST HEADER ===== -->
   <header class="site-header-minimal" id="site-header">
     <div class="container header-minimal-inner">
       
-      <!-- Left Nav Items -->
+      <!-- Left Logo -->
+      <a href="index.html" class="logo-center">
+        <span class="logo-sub">Quy Nhon</span>
+        <h1 class="logo-main">TOP 10<span>.com</span></h1>
+      </a>
+
+      <!-- Right Nav Action Items -->
       <div class="minimal-nav">
-        <button class="minimal-nav-item" id="hamburger" aria-label="Menu">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-          MENU
-        </button>
+        <a href="ban-do-du-lich-quy-nhon.html" class="minimal-nav-item mobile-keep" style="color:#0284c7;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 15 22 22 18 22 2 15 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="15" y1="6" x2="15" y2="22"></line></svg>
+          BẢN ĐỒ
+        </a>
         <a href="thue-xe-quy-nhon.html" class="minimal-nav-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="22" height="13" rx="2" ry="2"></rect><path d="M7 21h10"></path><path d="M12 16v5"></path></svg>
           THUÊ XE
@@ -94,32 +100,19 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
           ĐẶT TOUR
         </a>
-        <a href="ban-do-du-lich-quy-nhon.html" class="minimal-nav-item" style="color:#0284c7;">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 15 22 22 18 22 2 15 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="15" y1="6" x2="15" y2="22"></line></svg>
-          BẢN ĐỒ
-        </a>
-      </div>
-
-      <!-- Center Logo -->
-      <a href="index.html" class="logo-center">
-        <span class="logo-sub">Quy Nhon</span>
-        <h1 class="logo-main">TOP 10<span>.com</span></h1>
-      </a>
-
-      <!-- Right Nav Items -->
-      <div class="minimal-nav">
         <a href="bai-bien-quy-nhon.html" class="minimal-nav-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           GIỚI THIỆU
         </a>
-        <button class="minimal-nav-item" onclick="document.getElementById('search-popup-bar').classList.toggle('active'); document.getElementById('search-popup-input').focus();">
+        <button class="minimal-nav-item mobile-keep" onclick="document.getElementById('search-popup-bar').classList.toggle('active'); document.getElementById('search-popup-input').focus();">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           TÌM KIẾM
         </button>
-        <a href="https://zalo.me/0345173287" target="_blank" rel="noopener" class="minimal-nav-item">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-          LIÊN HỆ
-        </a>
+        <button class="minimal-nav-item mobile-keep" id="hamburger" aria-label="Menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          MENU
+        </button>
+      </div>
         
         <!-- User account menu / Login button -->
         <div class="user-menu-container" id="userMenuContainer" style="margin-left: 8px;">
