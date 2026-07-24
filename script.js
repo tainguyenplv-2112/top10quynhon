@@ -480,5 +480,72 @@ document.addEventListener('DOMContentLoaded', function () {
 
   loadSavedUserReviews();
 
+  // ---- TRIP COST CALCULATOR ENGINE ----
+  window.calcState = {
+    days: 2,
+    people: 2,
+    style: 'homestay',
+    vehicle: 'motorbike'
+  };
+
+  window.selectCalcOption = function(btn) {
+    const type = btn.getAttribute('data-type');
+    const val = btn.getAttribute('data-value');
+    
+    window.calcState[type] = (type === 'days' || type === 'people') ? parseInt(val) : val;
+    
+    // Toggle active class inside button group
+    const siblings = btn.parentElement.querySelectorAll('.calc-btn');
+    siblings.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    
+    calculateTripBudget();
+  };
+
+  function calculateTripBudget() {
+    const { days, people, style, vehicle } = window.calcState;
+    const nights = days - 1;
+    
+    // 1. Stay cost
+    let stayCostPerNight = (style === 'homestay') ? 600000 : 2200000;
+    let roomCount = Math.ceil(people / 2);
+    let totalStayCost = stayCostPerNight * nights * roomCount;
+    
+    // 2. Tour & Attractions cost
+    let tourCostPerPerson = 700000; // Kỳ Co - Eo Gió Cano + Lặn San Hô
+    if (days >= 3) tourCostPerPerson += 300000; // Tây Sơn Hầm Hô Tour
+    let totalTourCost = tourCostPerPerson * people;
+    
+    // 3. Food cost
+    let foodCostPerPersonPerDay = 350000;
+    let totalFoodCost = foodCostPerPersonPerDay * days * people;
+    
+    // 4. Vehicle cost
+    let vehicleCostPerDay = (vehicle === 'motorbike') ? 150000 : 800000;
+    let vehicleCount = (vehicle === 'motorbike') ? Math.ceil(people / 2) : 1;
+    let totalVehicleCost = vehicleCostPerDay * days * vehicleCount;
+    
+    let grandTotal = totalStayCost + totalTourCost + totalFoodCost + totalVehicleCost;
+    let perPerson = Math.round(grandTotal / people);
+    
+    // Format Vietnamese Currency
+    const fmt = num => new Intl.NumberFormat('vi-VN').format(num) + 'đ';
+    
+    const perPersonElem = document.getElementById('calcPerPersonCost');
+    const totalElem = document.getElementById('calcTotalCost');
+    const breakdownStay = document.getElementById('calcBreakdownStay');
+    const breakdownTour = document.getElementById('calcBreakdownTour');
+    const breakdownFood = document.getElementById('calcBreakdownFood');
+    const breakdownVehicle = document.getElementById('calcBreakdownVehicle');
+    
+    if (perPersonElem) perPersonElem.innerHTML = `${fmt(perPerson)} <span style="font-size:14px; font-weight:600; color:#cbd5e1;">/ người</span>`;
+    if (totalElem) totalElem.innerText = `👉 Tổng chuyến đi (${people} người, ${days}N${nights}Đ): ${fmt(grandTotal)}`;
+    
+    if (breakdownStay) breakdownStay.innerText = `🏨 Tiền lưu trú (${nights} đêm, ${roomCount} phòng): ~${fmt(totalStayCost)}`;
+    if (breakdownTour) breakdownTour.innerText = `🚤 Tour Cano Kỳ Co & Vé tham quan: ~${fmt(totalTourCost)}`;
+    if (breakdownFood) breakdownFood.innerText = `🍲 Ăn uống hải sản & đặc sản (${days} ngày): ~${fmt(totalFoodCost)}`;
+    if (breakdownVehicle) breakdownVehicle.innerText = `${vehicle === 'motorbike' ? '🛵 Xe máy + xăng xe' : '🚗 Thuê xe ô tô'} (${days} ngày): ~${fmt(totalVehicleCost)}`;
+  }
+
   console.log('Top 10 Quy Nhơn website loaded successfully ✅');
 });
