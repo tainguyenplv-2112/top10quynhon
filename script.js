@@ -506,22 +506,32 @@ document.addEventListener('DOMContentLoaded', function () {
     const { days, people, style, vehicle } = window.calcState;
     const nights = days - 1;
     
-    // 1. Stay cost
-    let stayCostPerNight = (style === 'homestay') ? 600000 : 2200000;
-    let roomCount = Math.ceil(people / 2);
-    let totalStayCost = stayCostPerNight * nights * roomCount;
+    // 1. Stay cost (Tối ưu cho người đi 1 mình dùng phòng đơn/Dorm thay vì phải chịu 100% phòng đôi 600k)
+    let stayCostPerNight;
+    if (people === 1) {
+      stayCostPerNight = (style === 'homestay') ? 350000 : 1500000;
+    } else {
+      stayCostPerNight = (style === 'homestay') ? 600000 : 2200000;
+    }
+    let roomCount = (people === 1) ? 1 : Math.ceil(people / 2);
+    let totalStayCost = stayCostPerNight * nights * (people === 1 ? 1 : roomCount);
     
     // 2. Tour & Attractions cost
-    let tourCostPerPerson = 700000; // Kỳ Co - Eo Gió Cano + Lặn San Hô
-    if (days >= 3) tourCostPerPerson += 300000; // Tây Sơn Hầm Hô Tour
+    let tourCostPerPerson = 650000; // Kỳ Co - Eo Gió Cano + Lặn San Hô
+    if (days >= 3) tourCostPerPerson += 250000; // Tây Sơn Hầm Hô Tour
     let totalTourCost = tourCostPerPerson * people;
     
     // 3. Food cost
-    let foodCostPerPersonPerDay = 350000;
+    let foodCostPerPersonPerDay = 300000;
     let totalFoodCost = foodCostPerPersonPerDay * days * people;
     
     // 4. Vehicle cost
-    let vehicleCostPerDay = (vehicle === 'motorbike') ? 150000 : 800000;
+    let vehicleCostPerDay;
+    if (vehicle === 'motorbike') {
+      vehicleCostPerDay = (people === 1) ? 120000 : 150000;
+    } else {
+      vehicleCostPerDay = 800000;
+    }
     let vehicleCount = (vehicle === 'motorbike') ? Math.ceil(people / 2) : 1;
     let totalVehicleCost = vehicleCostPerDay * days * vehicleCount;
     
@@ -539,9 +549,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const breakdownVehicle = document.getElementById('calcBreakdownVehicle');
     
     if (perPersonElem) perPersonElem.innerHTML = `${fmt(perPerson)} <span style="font-size:14px; font-weight:600; color:#cbd5e1;">/ người</span>`;
-    if (totalElem) totalElem.innerText = `👉 Tổng chuyến đi (${people} người, ${days}N${nights}Đ): ${fmt(grandTotal)}`;
     
-    if (breakdownStay) breakdownStay.innerText = `🏨 Tiền lưu trú (${nights} đêm, ${roomCount} phòng): ~${fmt(totalStayCost)}`;
+    if (people === 1) {
+      if (totalElem) totalElem.innerText = `👉 Tổng chuyến đi trọn gói (1 người solo): ${fmt(grandTotal)}`;
+      if (breakdownStay) breakdownStay.innerText = `🏨 Tiền lưu trú (${nights} đêm phòng đơn/Dorm): ~${fmt(totalStayCost)}`;
+    } else {
+      if (totalElem) totalElem.innerText = `👉 Tổng chuyến đi (${people} người, ${days}N${nights}Đ): ${fmt(grandTotal)}`;
+      if (breakdownStay) breakdownStay.innerText = `🏨 Tiền lưu trú (${nights} đêm, ${roomCount} phòng đôi): ~${fmt(totalStayCost)}`;
+    }
+    
     if (breakdownTour) breakdownTour.innerText = `🚤 Tour Cano Kỳ Co & Vé tham quan: ~${fmt(totalTourCost)}`;
     if (breakdownFood) breakdownFood.innerText = `🍲 Ăn uống hải sản & đặc sản (${days} ngày): ~${fmt(totalFoodCost)}`;
     if (breakdownVehicle) breakdownVehicle.innerText = `${vehicle === 'motorbike' ? '🛵 Xe máy + xăng xe' : '🚗 Thuê xe ô tô'} (${days} ngày): ~${fmt(totalVehicleCost)}`;
