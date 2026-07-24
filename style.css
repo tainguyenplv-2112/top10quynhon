@@ -2019,3 +2019,77 @@ section, .transport-section, .food-section, .utility-section, .cat-boxes-section
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15) !important;
 }
 
+/* 8. Fix Mobile Header Overlap Bug */
+.site-header-minimal {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #e2e8f0;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.header-minimal-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.logo-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .site-header-minimal {
+    height: 54px !important;
+  }
+  .header-minimal-inner {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 0 10px !important;
+    position: relative !important;
+  }
+  .logo-center {
+    position: static !important;
+    transform: none !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    flex-shrink: 0 !important;
+  }
+  .logo-main {
+    font-size: 16px !important;
+    margin: 0 !important;
+    line-height: 1.1 !important;
+  }
+  .logo-sub {
+    font-size: 8.5px !important;
+    margin: 0 !important;
+  }
+  .minimal-nav {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2px !important;
+  }
+  .minimal-nav a.minimal-nav-item:not(.mobile-keep),
+  .minimal-nav button.minimal-nav-item:not(.mobile-keep) {
+    display: none !important;
+  }
+  .minimal-nav-item {
+    padding: 4px 6px !important;
+    font-size: 10px !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+  }
+  .minimal-nav-item svg {
+    width: 16px !important;
+    height: 16px !important;
+  }
+}
+
