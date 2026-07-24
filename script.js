@@ -361,5 +361,124 @@ document.addEventListener('DOMContentLoaded', function () {
 
   fetchRealtimeWeather();
 
+  // ---- LIVE USER REVIEW FORM & LOCALSTORAGE ENGINE ----
+  window.selectedStarRating = 5;
+  window.uploadedReviewImageData = "";
+
+  window.setStarRating = function(rating) {
+    window.selectedStarRating = rating;
+    const ratingInput = document.getElementById('reviewRating');
+    if (ratingInput) ratingInput.value = rating;
+    
+    const stars = document.querySelectorAll('#starRatingSelect span');
+    stars.forEach((star, idx) => {
+      if (idx < rating) {
+        star.classList.add('active');
+      } else {
+        star.classList.remove('active');
+      }
+    });
+  };
+
+  window.previewReviewImage = function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        window.uploadedReviewImageData = e.target.result;
+        const imgPreview = document.getElementById('imagePreview');
+        const container = document.getElementById('imagePreviewContainer');
+        if (imgPreview && container) {
+          imgPreview.src = e.target.result;
+          container.style.display = 'block';
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  window.submitUserReview = function(event) {
+    event.preventDefault();
+    const name = document.getElementById('reviewName').value.trim();
+    const text = document.getElementById('reviewText').value.trim();
+    const rating = window.selectedStarRating || 5;
+    const pageKey = 'user_reviews_' + (window.location.pathname.split('/').pop() || 'index.html');
+    
+    if (!name || !text) return;
+    
+    const starsHtml = '★'.repeat(rating) + '☆'.repeat(5 - rating);
+    const now = new Date();
+    const dateStr = `${String(now.getDate()).padStart(2, '0')}/${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`;
+    
+    const newReview = {
+      name: name,
+      rating: rating,
+      starsHtml: starsHtml,
+      date: dateStr,
+      text: text,
+      image: window.uploadedReviewImageData || ""
+    };
+    
+    let reviews = JSON.parse(localStorage.getItem(pageKey) || '[]');
+    reviews.unshift(newReview);
+    localStorage.setItem(pageKey, JSON.stringify(reviews));
+    
+    renderSingleReviewCard(newReview, true);
+    
+    document.getElementById('reviewForm').reset();
+    window.setStarRating(5);
+    window.uploadedReviewImageData = "";
+    const previewContainer = document.getElementById('imagePreviewContainer');
+    if (previewContainer) previewContainer.style.display = 'none';
+    
+    alert('🎉 Cảm ơn bạn! Đánh giá của bạn đã được đăng lên trang web thành công!');
+  };
+
+  function renderSingleReviewCard(review, prepend = false) {
+    const commentsList = document.querySelector('.comments-list');
+    if (!commentsList) return;
+    
+    const firstLetter = review.name.charAt(0).toUpperCase();
+    const card = document.createElement('div');
+    card.className = 'comment-card';
+    card.style.background = '#f0f9ff';
+    card.style.border = '1px solid #bae6fd';
+    card.style.marginBottom = '14px';
+    
+    let imgTag = '';
+    if (review.image) {
+      imgTag = `<div style="margin-top:10px;"><img src="${review.image}" alt="Review photo" style="max-height:180px; border-radius:8px; display:block; object-fit:contain;"></div>`;
+    }
+    
+    card.innerHTML = `
+      <div class="comment-header">
+        <div class="comment-user">
+          <div class="comment-avatar" style="background:#0284c7; color:white;">${firstLetter}</div>
+          <div class="comment-user-info">
+            <h5>${review.name} <span style="font-size:10px; font-weight:800; background:#e0f2fe; color:#0284c7; padding:2px 6px; border-radius:10px; margin-left:4px;">Khách du lịch</span></h5>
+            <div class="comment-stars" style="color:#f59e0b;">${review.starsHtml}</div>
+          </div>
+        </div>
+        <span class="comment-date">${review.date}</span>
+      </div>
+      <p class="comment-text">${review.text}</p>
+      ${imgTag}
+    `;
+    
+    if (prepend) {
+      commentsList.prepend(card);
+    } else {
+      commentsList.appendChild(card);
+    }
+  }
+
+  function loadSavedUserReviews() {
+    const pageKey = 'user_reviews_' + (window.location.pathname.split('/').pop() || 'index.html');
+    let reviews = JSON.parse(localStorage.getItem(pageKey) || '[]');
+    reviews.forEach(r => renderSingleReviewCard(r, false));
+  }
+
+  loadSavedUserReviews();
+
   console.log('Top 10 Quy Nhơn website loaded successfully ✅');
 });
