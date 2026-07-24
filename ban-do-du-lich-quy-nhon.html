@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bản Đồ Du Lịch Quy Nhơn Tương Tác – Khám Phá Địa Điểm & Định Vị Chỉ Đường 2026</title>
+  <meta name="description" content="Bản đồ du lịch Quy Nhơn tương tác thông minh. Tra cứu vị trí bãi biển Kỳ Co, Eo Gió, Hầm Hô, nhà hàng hải sản, khách sạn homestay và định vị chỉ đường Google Maps nhanh nhất.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=5">
+  <link rel="stylesheet" href="detail.css?v=5">
+
+  <!-- Leaflet CSS & JS for Interactive Map -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+  <style>
+    .map-header-banner {
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+      color: white;
+      padding: 32px 0;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .map-header-banner h1 {
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .map-header-banner p {
+      font-size: 14px;
+      opacity: 0.9;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    
+    .map-filter-bar {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .map-filter-btn {
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: 1.5px solid #cbd5e1;
+      background: white;
+      color: #334155;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+    .map-filter-btn:hover, .map-filter-btn.active {
+      background: #0284c7;
+      color: white;
+      border-color: #0284c7;
+      box-shadow: 0 4px 14px rgba(2, 132, 199, 0.3);
+    }
+
+    .map-main-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      margin-bottom: 48px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .map-main-layout { grid-template-columns: 1fr; }
+    }
+
+    #map-container {
+      height: 600px;
+      border-radius: 16px;
+      border: 2px solid #e2e8f0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      z-index: 1;
+    }
+
+    .map-list-panel {
+      max-height: 600px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-right: 6px;
+    }
+    .map-list-panel::-webkit-scrollbar { width: 6px; }
+    .map-list-panel::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+    .map-item-card {
+      display: flex;
+      gap: 12px;
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1.5px solid #e2e8f0;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .map-item-card:hover, .map-item-card.active {
+      border-color: #0284c7;
+      background: #f0f9ff;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(2, 132, 199, 0.12);
+    }
+    .map-item-thumb {
+      width: 80px;
+      height: 70px;
+      border-radius: 8px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .map-item-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .map-item-info h4 {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+    .map-item-info p {
+      font-size: 11.5px;
+      color: #64748b;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    /* Custom Leaflet Popup Card */
+    .leaflet-popup-content-wrapper {
+      padding: 0;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      width: 240px !important;
+    }
+    .popup-card-img {
+      height: 110px;
+      width: 100%;
+      object-fit: cover;
+    }
+    .popup-card-body {
+      padding: 12px;
+    }
+    .popup-card-body h4 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .popup-card-body p {
+      font-size: 11.5px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== WEATHER & SEA FORECAST TOPBAR ===== -->
+  <div class="weather-topbar" style="background: linear-gradient(90deg, #0284c7 0%, #0d9488 100%); color: white; padding: 6px 0; font-size: 12px; font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.1);">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span style="background: rgba(255,255,255,0.22); padding: 2px 8px; border-radius: 12px; font-size: 10.5px; font-weight: 800; letter-spacing: 0.5px;">📍 QUY NHƠN HÔM NAY</span>
+        <span>☀️ 29°C | Nắng Đẹp Rực Rỡ</span>
+        <span style="opacity: 0.6;">•</span>
+        <span>🌊 Sóng Biển 0.5m (Êm Dịu)</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 6px; font-size: 11.5px; background: rgba(255,255,255,0.15); padding: 3px 12px; border-radius: 14px;">
+        <span>💡 <strong>Khuyên Dùng:</strong> Thời tiết lý tưởng đi cano lặn ngắm san hô Kỳ Co & Eo Gió hôm nay!</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MINIMALIST HEADER ===== -->
+  <header class="site-header-minimal" id="site-header">
+    <div class="container header-minimal-inner">
+      <div class="minimal-nav">
+        <a href="index.html" class="minimal-nav-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          TRANG CHỦ
+        </a>
+        <a href="bai-bien-quy-nhon.html" class="minimal-nav-item">DU LỊCH</a>
+        <a href="quan-an-quy-nhon.html" class="minimal-nav-item">ẨM THỰC</a>
+        <a href="khach-san-quy-nhon.html" class="minimal-nav-item">KHÁCH SẠN</a>
+        <a href="ban-do-du-lich-quy-nhon.html" class="minimal-nav-item" style="color:#0284c7;">🗺️ BẢN ĐỒ</a>
+      </div>
+
+      <a href="index.html" class="logo-center">
+        <span class="logo-sub">Quy Nhon</span>
+        <h1 class="logo-main">TOP 10<span>.com</span></h1>
+      </a>
+
+      <div class="minimal-nav">
+        <a href="thue-xe-quy-nhon.html" class="minimal-nav-item">THUÊ XE OTO</a>
+        <a href="https://zalo.me/0345173287" target="_blank" class="minimal-nav-item">LIÊN HỆ</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MAP HEADER BANNER ===== -->
+  <section class="map-header-banner">
+    <div class="container">
+      <h1>🗺️ Bản Đồ Du Lịch Quy Nhơn Tương Tác 2026</h1>
+      <p>Tra cứu vị trí bãi biển Kỳ Co, Eo Gió, Hầm Hô, địa điểm ăn uống, khách sạn & bấm định vị dẫn đường Google Maps 1-Click trực tiếp!</p>
+    </div>
+  </section>
+
+  <!-- ===== MAIN CONTENT CONTAINER ===== -->
+  <main class="container">
+
+    <!-- Category Filter Buttons -->
+    <div class="map-filter-bar">
+      <button class="map-filter-btn active" onclick="filterMap('all', this)">✨ Tất Cả Địa Điểm</button>
+      <button class="map-filter-btn" onclick="filterMap('baibien', this)">🌴 Bãi Biển & Danh Thắng</button>
+      <button class="map-filter-btn" onclick="filterMap('amthuc', this)">🍲 Ẩm Thực & Quán Ăn</button>
+      <button class="map-filter-btn" onclick="filterMap('khachsan', this)">🏨 Khách Sạn & Homestay</button>
+      <button class="map-filter-btn" onclick="filterMap('checkin', this)">📸 Điểm Check-in Nổi Tiếng</button>
+    </div>
+
+    <!-- Map & List Layout -->
+    <div class="map-main-layout">
+      
+      <!-- Side List Panel -->
+      <div class="map-list-panel" id="map-list-panel">
+        <!-- Dynamic list cards inserted via JavaScript -->
+      </div>
+
+      <!-- Interactive Map Canvas -->
+      <div id="map-container"></div>
+
+    </div>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer" id="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <div class="logo-badge logo-badge-footer">
+            <span class="logo-top">10</span>
+            <span class="logo-bottom">Quynhon</span>
+            <span class="logo-dot">.com</span>
+          </div>
+          <p class="footer-desc">Trang thông tin cẩm nang du lịch, ẩm thực, dịch vụ, khách sạn uy tín hàng đầu Quy Nhơn 2026.</p>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Chuyên Mục</h4>
+          <ul class="footer-links">
+            <li><a href="bai-bien-quy-nhon.html">Du Lịch Quy Nhơn</a></li>
+            <li><a href="quan-an-quy-nhon.html">Ẩm Thực Đặc Sản</a></li>
+            <li><a href="khach-san-quy-nhon.html">Khách Sạn & Homestay</a></li>
+            <li><a href="ban-do-du-lich-quy-nhon.html">Bản Đồ Du Lịch</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Địa Điểm Đầy Đủ</h4>
+          <ul class="footer-links">
+            <li><a href="eo-gio.html">Eo Gió Nhơn Lý</a></li>
+            <li><a href="ham-ho.html">Khu Sinh Thái Hầm Hô</a></li>
+            <li><a href="bao-tang-quang-trung.html">Bảo Tàng Quang Trung</a></li>
+            <li><a href="thap-doi.html">Tháp Đôi Chăm Pa</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Liên Hệ Quảng Cáo</h4>
+          <ul class="footer-contact">
+            <li>📍 TP. Quy Nhơn, Bình Định</li>
+            <li>📞 <a href="tel:0345173287">0345.173.287</a></li>
+            <li>✉️ <a href="mailto:tainguyenplv@gmail.com">tainguyenplv@gmail.com</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 Top10Quynhon.com – Bản quyền thuộc về Top 10 Quy Nhơn.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Call & Zalo Buttons -->
+  <a href="tel:0345173287" class="phone-btn-mini" aria-label="Gọi điện">📞</a>
+  <a href="https://zalo.me/0345173287" target="_blank" class="zalo-btn-mini" aria-label="Zalo">💬</a>
+
+  <!-- ===== MAP ENGINE SCRIPT ===== -->
+  <script>
+    const placesData = [
+      { id: 1, name: "Đảo Kỳ Co Quy Nhơn", cat: "baibien", lat: 13.8967, lng: 109.2892, address: "Xã Nhơn Lý, TP. Quy Nhơn", img: "images/beach_hotel.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Đảo+Kỳ+Co+Quy+Nhon" },
+      { id: 2, name: "Eo Gió Nhơn Lý", cat: "baibien", lat: 13.8864, lng: 109.2847, address: "Làng chài Nhơn Lý, TP. Quy Nhơn", img: "images/beach_hotel.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Eo+Gió+Nhơn+Lý+Quy+Nhon" },
+      { id: 3, name: "Khu Sinh Thái Hầm Hô", cat: "baibien", lat: 13.8821, lng: 108.9248, address: "Xã Tây Phú, Huyện Tây Sơn", img: "images/ham_ho.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Khu+du+lịch+sinh+thái+Hầm+Hô+Tây+Sơn" },
+      { id: 4, name: "Ghềnh Ráng Tiên Sa & Mộ Hàn Mặc Tử", cat: "checkin", lat: 13.7533, lng: 109.2189, address: "Phường Ghềnh Ráng, TP. Quy Nhơn", img: "images/beach_hotel.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Ghềnh+Ráng+Tiên+Sa+Quy+Nhon" },
+      { id: 5, name: "Tháp Đôi Quy Nhơn", cat: "checkin", lat: 13.7850, lng: 109.2167, address: "Đường Trần Hưng Đạo, Quy Nhơn", img: "images/thap_doi.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Tháp+Đôi+Quy+Nhon" },
+      { id: 6, name: "Bảo Tàng Quang Trung", cat: "checkin", lat: 13.8920, lng: 108.9750, address: "Phú Phong, Huyện Tây Sơn", img: "images/bao_tang_quang_trung.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Bảo+tàng+Quang+Trung+Tây+Sơn" },
+      { id: 7, name: "Đàn Tế Trời Đất Ấn Sơn", cat: "checkin", lat: 13.9100, lng: 108.9500, address: "Xã Bình Tường, Huyện Tây Sơn", img: "images/dan_te_troi.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Đàn+tế+trời+đất+Tây+Sơn" },
+      { id: 8, name: "Nhà Hàng Hải Sản Cine Quy Nhơn", cat: "amthuc", lat: 13.7667, lng: 109.2310, address: "Đường Xuân Diệu, TP. Quy Nhơn", img: "images/seafood_restaurant.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Nhà+hàng+hải+sản+Cine+Quy+Nhon" },
+      { id: 9, name: "Bánh Xèo Tôm Nhảy Gia Thanh", cat: "amthuc", lat: 13.7745, lng: 109.2250, address: "14 Nguyễn Huệ, TP. Quy Nhơn", img: "images/food_review.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Bánh+xèo+tôm+nhảy+Quy+Nhon" },
+      { id: 10, name: "Anantara Quy Nhon Villas 5★", cat: "khachsan", lat: 13.6980, lng: 109.2140, address: "Bãi Dài, Ghềnh Ráng, Quy Nhơn", img: "images/beach_hotel.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Anantara+Quy+Nhon+Villas" },
+      { id: 11, name: "FLC Grand Hotel Quy Nhon 5★", cat: "khachsan", lat: 13.8850, lng: 109.2800, address: "Xã Nhơn Lý, TP. Quy Nhơn", img: "images/beach_hotel.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=FLC+Grand+Hotel+Quy+Nhon" },
+      { id: 12, name: "Mộc Homestay Nhơn Lý", cat: "khachsan", lat: 13.8870, lng: 109.2830, address: "Làng chài Nhơn Lý (Gần Eo Gió)", img: "images/homestay.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Mộc+Homestay+Nhơn+Lý" },
+      { id: 13, name: "Lặng Homestay Quy Nhơn", cat: "khachsan", lat: 13.7700, lng: 109.2200, address: "02/21 Nguyễn Bỉnh Khiêm, Quy Nhơn", img: "images/homestay.png", rating: "★★★★★", mapsUrl: "https://maps.google.com/?q=Lặng+Homestay+Quy+Nhon" }
+    ];
+
+    let map;
+    let markersList = [];
+
+    function initMap() {
+      // Centered at Quy Nhơn city
+      map = L.map('map-container').setView([13.7820, 109.2194], 11);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '© OpenStreetMap contributors | Top10Quynhon.com'
+      }).addTo(map);
+
+      renderPlaces('all');
+    }
+
+    function renderPlaces(category) {
+      // Clear markers
+      markersList.forEach(m => map.removeLayer(m));
+      markersList = [];
+
+      const listPanel = document.getElementById('map-list-panel');
+      listPanel.innerHTML = '';
+
+      const filtered = category === 'all' ? placesData : placesData.filter(p => p.cat === category);
+
+      filtered.forEach(place => {
+        // Create Leaflet Marker
+        const marker = L.marker([place.lat, place.lng]).addTo(map);
+        
+        const popupContent = `
+          <img src="${place.img}" class="popup-card-img" alt="${place.name}">
+          <div class="popup-card-body">
+            <h4>${place.name}</h4>
+            <p>📍 ${place.address}</p>
+            <a href="${place.mapsUrl}" target="_blank" rel="noopener" class="map-dir-btn" style="display:inline-flex; align-items:center; gap:4px; padding:6px 12px; background:#0284c7; color:white; border-radius:20px; font-size:11.5px; font-weight:700; text-decoration:none; width:100%; justify-content:center;">
+              📍 Chỉ Đường Google Maps
+            </a>
+          </div>
+        `;
+        marker.bindPopup(popupContent);
+        markersList.push(marker);
+
+        // Build list card on side panel
+        const card = document.createElement('div');
+        card.className = 'map-item-card';
+        card.onclick = () => {
+          map.setView([place.lat, place.lng], 14, { animate: true });
+          marker.openPopup();
+          document.querySelectorAll('.map-item-card').forEach(c => c.classList.remove('active'));
+          card.classList.add('active');
+        };
+
+        card.innerHTML = `
+          <div class="map-item-thumb">
+            <img src="${place.img}" alt="${place.name}" loading="lazy">
+          </div>
+          <div class="map-item-info">
+            <h4>${place.name}</h4>
+            <p>📍 ${place.address}</p>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:#f59e0b; font-size:11px;">${place.rating}</span>
+              <span style="color:#0284c7; font-size:11px; font-weight:700;">Chỉ đường ➔</span>
+            </div>
+          </div>
+        `;
+        listPanel.appendChild(card);
+      });
+    }
+
+    function filterMap(cat, btn) {
+      document.querySelectorAll('.map-filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderPlaces(cat);
+    }
+
+    document.addEventListener('DOMContentLoaded', initMap);
+  </script>
+</body>
+</html>
