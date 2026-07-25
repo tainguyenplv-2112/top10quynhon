@@ -1675,43 +1675,43 @@
     });
   </script>
   <!-- ===== FLOATING LUCKY WHEEL TRIGGER BUTTON ===== -->
-  <button id="luckyWheelTriggerBtn" onclick="openLuckyWheelModal()" style="position: fixed; bottom: 85px; left: 20px; z-index: 997; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 800; font-size: 12.5px; box-shadow: 0 4px 18px rgba(225, 29, 72, 0.4); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s; animation: pulse-wheel 2s infinite;">
+  <button id="luckyWheelTriggerBtn" onclick="window.openLuckyWheelModal()" style="position: fixed; bottom: 85px; left: 20px; z-index: 9999; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; border: none; padding: 10px 16px; border-radius: 30px; font-weight: 800; font-size: 12.5px; box-shadow: 0 4px 18px rgba(225, 29, 72, 0.5); display: flex; align-items: center; gap: 8px; cursor: pointer; transition: transform 0.2s; animation: pulse-wheel 2s infinite;">
     <span style="font-size: 18px;">🎁</span>
     <span>Vòng Quay Voucher</span>
   </button>
   <style>
     @keyframes pulse-wheel {
-      0% { transform: scale(1); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.4); }
-      50% { transform: scale(1.05); box-shadow: 0 6px 24px rgba(225, 29, 72, 0.7); }
-      100% { transform: scale(1); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.4); }
+      0% { transform: scale(1); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.5); }
+      50% { transform: scale(1.06); box-shadow: 0 6px 24px rgba(225, 29, 72, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 4px 18px rgba(225, 29, 72, 0.5); }
     }
   </style>
 
   <!-- ===== LUCKY WHEEL GAMIFICATION MODAL ===== -->
-  <div id="luckyWheelModal" class="login-modal" style="display: none; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 2000;">
-    <div style="background: white; border-radius: 20px; width: 92%; max-width: 440px; padding: 24px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.3); border: 2px solid #f43f5e; max-height: 90vh; overflow-y: auto;">
+  <div id="luckyWheelModal" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center;">
+    <div style="background: white; border-radius: 20px; width: 92%; max-width: 420px; padding: 24px; text-align: center; position: relative; box-shadow: 0 10px 40px rgba(0,0,0,0.4); border: 2.5px solid #f43f5e; max-height: 90vh; overflow-y: auto;">
       
-      <button onclick="closeLuckyWheelModal()" style="position: absolute; right: 14px; top: 14px; background: #f1f5f9; border: none; border-radius: 50%; width: 32px; height: 32px; font-weight: 800; color: #64748b; cursor: pointer;">✕</button>
+      <button onclick="window.closeLuckyWheelModal()" style="position: absolute; right: 14px; top: 14px; background: #f1f5f9; border: none; border-radius: 50%; width: 32px; height: 32px; font-weight: 800; color: #64748b; cursor: pointer; font-size: 14px;">✕</button>
 
       <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.8px; background: #ffe4e6; color: #e11d48; padding: 4px 14px; border-radius: 20px;">VÒNG QUAY MAY MẮN QUY NHƠN 2026</span>
       <h3 style="font-size: 18px; font-weight: 800; color: #0f172a; margin-top: 8px; margin-bottom: 4px;">🎁 Quay Là Trúng Voucher Du Lịch!</h3>
-      <p style="font-size: 12px; color: #64748b; margin-bottom: 16px;">Nhập Tên + Zalo để nhận mã giảm giá thuê xe, homestay & tour Kỳ Co!</p>
+      <p style="font-size: 12px; color: #64748b; margin-bottom: 14px;">Nhập Tên + Zalo để nhận mã giảm giá thuê xe, homestay & tour Kỳ Co!</p>
 
       <!-- Wheel Container with Pointer -->
-      <div style="position: relative; width: 280px; height: 280px; margin: 0 auto 16px auto;">
+      <div style="position: relative; width: 260px; height: 260px; margin: 0 auto 14px auto;">
         <!-- Pointer Needle -->
         <div style="position: absolute; top: -14px; left: 50%; transform: translateX(-50%); z-index: 10; width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; border-top: 24px solid #e11d48; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));"></div>
         
         <!-- Canvas Wheel -->
-        <canvas id="wheelCanvas" width="280" height="280" style="border-radius: 50%; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 4px solid #ffffff; transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);"></canvas>
+        <canvas id="wheelCanvas" width="260" height="260" style="border-radius: 50%; box-shadow: 0 6px 20px rgba(0,0,0,0.15); border: 4px solid #ffffff; transition: transform 4s cubic-bezier(0.15, 0.9, 0.2, 1);"></canvas>
       </div>
 
       <!-- Lead Capture Form -->
-      <div id="wheelFormBox" style="margin-bottom: 12px;">
+      <div id="wheelFormBox" style="margin-bottom: 8px;">
         <input type="text" id="wheelUserName" placeholder="Họ và tên của bạn *" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-size: 13px; margin-bottom: 8px; outline: none; font-family: inherit;">
         <input type="tel" id="wheelUserPhone" placeholder="Số điện thoại / Zalo *" style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1.5px solid #cbd5e1; font-size: 13px; margin-bottom: 12px; outline: none; font-family: inherit;">
         
-        <button id="spinBtn" onclick="spinLuckyWheel()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; font-weight: 800; font-size: 14px; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4); transition: transform 0.2s;">
+        <button id="spinBtn" onclick="window.spinLuckyWheel()" style="width: 100%; padding: 12px; background: linear-gradient(135deg, #f43f5e 0%, #e11d48 100%); color: white; font-weight: 800; font-size: 14px; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4); transition: transform 0.2s;">
           🎯 QUAY NGAY NHẬN VOUCHER!
         </button>
       </div>
@@ -1745,7 +1745,7 @@
     let currentWheelRotation = 0;
     let isWheelSpinning = false;
 
-    function drawWheel() {
+    window.drawWheel = function() {
       const canvas = document.getElementById('wheelCanvas');
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
@@ -1770,35 +1770,41 @@
         ctx.rotate(angle + arcSize / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#ffffff";
-        ctx.font = "bold 11.5px Be Vietnam Pro, sans-serif";
+        ctx.font = "bold 11px Be Vietnam Pro, sans-serif";
         ctx.shadowColor = "rgba(0,0,0,0.4)";
         ctx.shadowBlur = 4;
-        ctx.fillText(segments[i].label, radius - 14, 4);
+        ctx.fillText(segments[i].label, radius - 12, 4);
         ctx.restore();
       }
 
       // Draw Center Pin Button
       ctx.beginPath();
-      ctx.arc(radius, radius, 26, 0, 2 * Math.PI);
+      ctx.arc(radius, radius, 24, 0, 2 * Math.PI);
       ctx.fillStyle = "#ffffff";
       ctx.fill();
       ctx.shadowBlur = 0;
       ctx.beginPath();
-      ctx.arc(radius, radius, 18, 0, 2 * Math.PI);
+      ctx.arc(radius, radius, 16, 0, 2 * Math.PI);
       ctx.fillStyle = "#e11d48";
       ctx.fill();
-    }
+    };
 
-    function openLuckyWheelModal() {
-      document.getElementById('luckyWheelModal').style.display = 'flex';
-      setTimeout(drawWheel, 100);
-    }
+    window.openLuckyWheelModal = function() {
+      const modal = document.getElementById('luckyWheelModal');
+      if (modal) {
+        modal.style.display = 'flex';
+        setTimeout(window.drawWheel, 100);
+      }
+    };
 
-    function closeLuckyWheelModal() {
-      document.getElementById('luckyWheelModal').style.display = 'none';
-    }
+    window.closeLuckyWheelModal = function() {
+      const modal = document.getElementById('luckyWheelModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    };
 
-    function spinLuckyWheel() {
+    window.spinLuckyWheel = function() {
       if (isWheelSpinning) return;
 
       const name = document.getElementById('wheelUserName').value.trim();
@@ -1860,7 +1866,7 @@
         
         resBox.style.display = 'block';
       }, 4100);
-    }
+    };
   </script>
 </body>
 </html>
