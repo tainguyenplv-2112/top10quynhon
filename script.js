@@ -380,6 +380,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
   fetchRealtimeWeather();
 
+  // ---- CURATED ITINERARY TAB SWITCHER ----
+  window.switchItinTab = function(btn) {
+    const tabs = document.querySelectorAll('.itin-tab-btn');
+    const panels = document.querySelectorAll('.itin-panel');
+    const targetId = btn.getAttribute('data-target');
+    
+    tabs.forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    
+    panels.forEach(p => {
+      if (p.id === targetId) {
+        p.style.display = 'block';
+        p.classList.add('active');
+      } else {
+        p.style.display = 'none';
+        p.classList.remove('active');
+      }
+    });
+  };
+
   // ---- LIVE USER REVIEW FORM & LOCALSTORAGE ENGINE ----
   window.selectedStarRating = 5;
   window.uploadedReviewImageData = "";
